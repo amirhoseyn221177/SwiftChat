@@ -7,22 +7,71 @@
 
 import UIKit
 
-class TextTestView: UIViewController,UITableViewDelegate  {
-    let RsaKey = RSAKeyPair()
+class TextTestView: UIViewController,UITableViewDelegate, UINavigationControllerDelegate, UINavigationBarDelegate   {
+//    let RsaKey = RSAKeyPair()
     let aes = AESKeyModel()
+    let message = MessageModel()
+    var rsa :RSAKeyPair? = nil
     var messages:[String] = ["sexpolo","abkir"]
-
+    var  socket : WebSocketConnection!
     @IBOutlet weak var messagesTable: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
         messagesTable.delegate = self
         messagesTable.dataSource = self
-        aes.sendingToBackEnd()
+        print(aes.getAESKey()!)
+        rsa = RSAKeyPair(AESKey: aes.getAESKey()!)
+        var _ = rsa?.CreateRSAKeyPair()
+
+        message.textContent = "abdul"
+        message.sender = "Amir polo"
+        
+        print("bytes of data")
+        print(message.textContent?.bytes)
+        aes.message = message
+        aes.createAESKey()
+        print("This is Binary AES")
+        print(aes.getAESKey())
+        var encryptedDataAES = aes.encryptData()
+        var encrytedAES = rsa?.encryptAESKey()
+        var decryptedAES = rsa?.decryptAESKey(encrytedAES!)
+        
+        print(encryptedDataAES!)
+        print("encrypted AES --------------------------------")
+        print(encrytedAES!)
+        print("decrypted AES binary")
+        print(decryptedAES)
+        var decryptedData = aes.decryptData(encryptedDataAES)
+        print("decrypted data")
+        print(decryptedData)
+        
+        
+
+        
+        
+        
+    
+//        socket = WebSocketNetwork()
+//        socket.delegate = self
+//        socket.connect()
+//        socket.sendText("I need ab kir ")
+        navigationController?.delegate = self
+        
+    
     }
+    
+    
+    
+    
+    
+    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("sex")
     }
+    
+    
+    
    
 
 }
@@ -43,3 +92,42 @@ extension TextTestView :UITableViewDataSource{
     
     
 }
+
+
+extension TextTestView : WebSocketConnectionDelegate{
+    func onDisconnected(connection: WebSocketConnection, reason: Data?, error: Error?) {
+        print("fuck we got disconnected !!!!")
+        DispatchQueue.main.async {
+            self.navigationItem.title = "Disconnected"
+            self.navigationController?.navigationBar.barTintColor = UIColor.red
+
+        }
+
+    }
+    
+    func onConnected(connection: WebSocketConnection) {
+        DispatchQueue.main.async {
+            self.navigationItem.title = "connected"
+            self.navigationController?.navigationBar.barTintColor = UIColor.blue
+
+        }
+        print("fuck yeah we are connected")
+    }
+        
+    func onError(connection: WebSocketConnection, error: Error) {
+        print(66)
+        print(error.localizedDescription)
+    }
+    
+    func onText(connection: WebSocketConnection, text: String) {
+        print(text)
+    }
+    
+    func onBinary(connection: WebSocketConnection, binary: Data) {
+        print(binary.toHexString())
+    }
+    
+    
+}
+
+

@@ -45,7 +45,7 @@
             </objects>
             <point key="canvasLocation" x="966.66666666666674" y="118.52678571428571"/>
         </scene>
-        <!--Text Test View-->
+        <!--Not Connected-->
         <scene sceneID="ttS-SE-yig">
             <objects>
                 <viewController id="ven-p1-vWd" customClass="TextTestView" customModule="SwiftChatApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -72,6 +72,7 @@
                         <viewLayoutGuide key="safeArea" id="FnZ-kY-Qis"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Not Connected" id="YkJ-J0-feJ"/>
                     <connections>
                         <outlet property="messagesTable" destination="gES-R1-pAu" id="fMM-AP-6sM"/>
                     </connections>

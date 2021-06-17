@@ -9,10 +9,29 @@ import Foundation
 import CryptoSwift
 import SwiftyJSON
 import Alamofire
+import SwiftyRSA
+
 class AESKeyModel{
     private var AESInstance : AES? = nil
-    private var Iv : Array<UInt8>? = nil
-    private var AES_key : Array<UInt8>? = nil
+
+    
+    private var Iv : Array<UInt8>{
+        get{
+            return AES.randomIV(AES.blockSize)
+        }
+    }
+    private var AES_key : Array<UInt8>?{
+        get{
+            if let finalAesKey = createAESKey(){
+                return finalAesKey
+            }
+            return nil
+        }
+    }
+    
+    var message : MessageModel?
+    
+
     private var randomBytePassword : Array<UInt8>?{
         get{
             return generateRandomBytes()
@@ -25,26 +44,29 @@ class AESKeyModel{
     }
     
     private var encryptedDataBase64 : String? = ""
+    
+    
 
     
     
-    func createAESKey()  {
+    func createAESKey()-> Array<UInt8>? {
   
         do{
-             Iv = AES.randomIV(AES.blockSize)
             if let rp = randomBytePassword , let rs = randomSalt{
-                  AES_key = try PKCS5.PBKDF2(password: rp, salt: rs, iterations: 4096, keyLength: 32, variant: .sha256).calculate()
+                  let aeskey = try PKCS5.PBKDF2(password: rp, salt: rs, iterations: 4096, keyLength: 32, variant: .sha256).calculate()
                 
-                AESInstance = try AES(key:AES_key! , blockMode: CBC(iv: Iv!), padding: .pkcs5)
+                AESInstance = try AES(key:aeskey , blockMode: CBC(iv: Iv), padding: .pkcs5)
+            return aeskey
             }
         }catch{
             print(error.localizedDescription)
         }
+        return nil
         
     }
         
         
-    func generateRandomBytes() -> Array<UInt8>?{
+    private func generateRandomBytes() -> Array<UInt8>?{
             var keyData = Data(count: 32)
             let result = keyData.withUnsafeMutableBytes{
                        SecRandomCopyBytes(kSecRandomDefault, 32, $0.baseAddress!)
@@ -56,16 +78,19 @@ class AESKeyModel{
         }
     
     
-    func getAESKey()-> AES?{
-        return AESInstance
+    func getAESKey()-> Array<UInt8>?{
+        return self.AES_key
     }
     
     
-    func encryptData(_ message : String)-> Array<UInt8>?{
+    func encryptData()-> Array<UInt8>?{
         var encrypted : Array<UInt8>? = nil
         do {
-            let byteData : Array<UInt8> = message.bytes
-             encrypted = try AESInstance?.encrypt(byteData)
+            if let byteData : Array<UInt8> = message?.textContent?.bytes{
+                encrypted = try AESInstance?.encrypt(byteData)
+            }else{
+                 fatalError("no message to encrypt ")
+            }
         }catch{
             print(error.localizedDescription)
         }
@@ -87,16 +112,19 @@ class AESKeyModel{
         return message
     }
     
+
     
-    func sendingToBackEnd(){
-        self.createAESKey()
-        self.encryptData("man kheili kioni hastam")
-        let base64IV = Iv?.toBase64()
-        let aesBase64 = AES_key?.toBase64()
-        let data:[String:String]=["text":encryptedDataBase64!,"iv":base64IV!, "key":aesBase64!]
-//        let json = JSON(data)
-        AF.request("http://10.0.0.8:8080/user/dec", method: .post, parameters: data,encoder: JSONParameterEncoder.default ).responseJSON { Response in
-            debugPrint(Response)
-        }
-    }
+//
+//    func sendingToBackEnd(){
+//        self.createAESKey()
+//        self.encryptData("man kheili kioni hastam")
+//        let base64IV = Iv?.toBase64()
+//        let aesBase64 = AES_key?.toBase64()
+//        let data:[String:String]=["text":encryptedDataBase64!,"iv":base64IV!, "key":aesBase64!]
+////        let json = JSON(data)
+//        AF.request("http://10.0.0.8:8080/user/dec", method: .post, parameters: data,encoder: JSONParameterEncoder.default ).responseJSON { Response in
+//            debugPrint(Response)
+//        }
+//    }
+    
 }

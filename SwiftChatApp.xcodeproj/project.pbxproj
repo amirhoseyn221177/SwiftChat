@@ -16,8 +16,10 @@
 		EC29DCDC2674E29A00A7E0E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC29DCDB2674E29A00A7E0E3 /* Assets.xcassets */; };
 		EC29DCDF2674E29A00A7E0E3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC29DCDD2674E29A00A7E0E3 /* LaunchScreen.storyboard */; };
 		EC29DCE72674ECDC00A7E0E3 /* TextTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC29DCE62674ECDC00A7E0E3 /* TextTestView.swift */; };
+		EC56DB3E267754300026B179 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC56DB3D267754300026B179 /* MessageModel.swift */; };
 		EC7C87262674F9F700169F8E /* RSAKeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7C87252674F9F700169F8E /* RSAKeyPair.swift */; };
 		EC7C87282675082C00169F8E /* AESKeyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7C87272675082C00169F8E /* AESKeyModel.swift */; };
+		EC7C872A267722BC00169F8E /* WebSocketNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7C8729267722BC00169F8E /* WebSocketNetwork.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,8 +36,10 @@
 		EC29DCDE2674E29A00A7E0E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EC29DCE02674E29A00A7E0E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EC29DCE62674ECDC00A7E0E3 /* TextTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTestView.swift; sourceTree = "<group>"; };
+		EC56DB3D267754300026B179 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
 		EC7C87252674F9F700169F8E /* RSAKeyPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAKeyPair.swift; sourceTree = "<group>"; };
 		EC7C87272675082C00169F8E /* AESKeyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AESKeyModel.swift; sourceTree = "<group>"; };
+		EC7C8729267722BC00169F8E /* WebSocketNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketNetwork.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +119,8 @@
 			children = (
 				EC7C87252674F9F700169F8E /* RSAKeyPair.swift */,
 				EC7C87272675082C00169F8E /* AESKeyModel.swift */,
+				EC7C8729267722BC00169F8E /* WebSocketNetwork.swift */,
+				EC56DB3D267754300026B179 /* MessageModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -235,10 +241,12 @@
 			files = (
 				EC7C87262674F9F700169F8E /* RSAKeyPair.swift in Sources */,
 				EC29DCD42674E29900A7E0E3 /* ViewController.swift in Sources */,
+				EC7C872A267722BC00169F8E /* WebSocketNetwork.swift in Sources */,
 				EC7C87282675082C00169F8E /* AESKeyModel.swift in Sources */,
 				EC29DCD02674E29900A7E0E3 /* AppDelegate.swift in Sources */,
 				EC29DCD22674E29900A7E0E3 /* SceneDelegate.swift in Sources */,
 				EC29DCE72674ECDC00A7E0E3 /* TextTestView.swift in Sources */,
+				EC56DB3E267754300026B179 /* MessageModel.swift in Sources */,
 				EC29DCDA2674E29900A7E0E3 /* SwiftChatApp.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

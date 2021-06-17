@@ -7,11 +7,16 @@
 
 import Foundation
 import SwiftyRSA
+import CryptoSwift
 class RSAKeyPair{
     
     private var privateKey: PrivateKey? = nil
     private var publicKey : PublicKey? = nil
+    private var AESKey : Array<UInt8>
     
+    init(AESKey:Array<UInt8>) {
+        self.AESKey = AESKey
+    }
     
     
     
@@ -47,5 +52,38 @@ class RSAKeyPair{
     func getPublicKey()->PublicKey?{
         return publicKey
     }
+    
+    
+    func encryptAESKey()-> String?{
+        do{
+            if let publicKey = self.publicKey {
+                let clear = ClearMessage(data: Data(AESKey))
+                let encrypted = try clear.encrypted(with: publicKey, padding: .OAEP)
+                return encrypted.data.base64EncodedString()
+            }
+        }catch{
+            print(error.localizedDescription)
+        }
+        return nil
+    }
+    
+    
+    func decryptAESKey(_ encryptedKey : String)->Array<UInt8>?{
+        
+        do{
+            let encrypted = try EncryptedMessage(base64Encoded: encryptedKey)
+          
+            if let prvkey = self.privateKey{
+                let clear = try encrypted.decrypted(with: prvkey, padding: .OAEP)
+                let binary = clear.data.bytes
+                return binary
+            }
+     
+        }catch{
+            print(error.localizedDescription)
+        }
+        return nil
+    }
+    
     
 }
