@@ -3,27 +3,51 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6DF3EE1856E3EAAB33DF227E /* Pods_ChatMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D922B91CBD7FBD222CC7113 /* Pods_ChatMobile.framework */; };
 		EC321755268315C8000BB632 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC321754268315C8000BB632 /* AppDelegate.swift */; };
 		EC321757268315C8000BB632 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC321756268315C8000BB632 /* SceneDelegate.swift */; };
-		EC321759268315C8000BB632 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC321758268315C8000BB632 /* ViewController.swift */; };
-		EC32175C268315C8000BB632 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC32175A268315C8000BB632 /* Main.storyboard */; };
 		EC32175E268315C8000BB632 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC32175D268315C8000BB632 /* Assets.xcassets */; };
 		EC321761268315C8000BB632 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC32175F268315C8000BB632 /* LaunchScreen.storyboard */; };
+		EC32176D268315F4000BB632 /* FriendsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC32176B268315F4000BB632 /* FriendsCell.xib */; };
+		EC32176E268315F4000BB632 /* FriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC32176C268315F4000BB632 /* FriendsCell.swift */; };
+		EC32177826831615000BB632 /* friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC32177226831615000BB632 /* friend.swift */; };
+		EC32177926831615000BB632 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC32177326831615000BB632 /* MessageModel.swift */; };
+		EC32177A26831615000BB632 /* RSAKeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC32177426831615000BB632 /* RSAKeyPair.swift */; };
+		EC32177B26831615000BB632 /* AESKeyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC32177526831615000BB632 /* AESKeyModel.swift */; };
+		EC32177C26831615000BB632 /* WebSocketNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC32177626831615000BB632 /* WebSocketNetwork.swift */; };
+		EC32177D26831615000BB632 /* ChatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC32177726831615000BB632 /* ChatUser.swift */; };
+		EC3217822683161F000BB632 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC32177F2683161F000BB632 /* ViewController.swift */; };
+		EC3217832683161F000BB632 /* TextTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3217802683161F000BB632 /* TextTestView.swift */; };
+		EC3217842683161F000BB632 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3217812683161F000BB632 /* FriendsView.swift */; };
+		EC3217862683185A000BB632 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC3217852683185A000BB632 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6A62926FF41D3C01443AEF8B /* Pods-ChatMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatMobile.debug.xcconfig"; path = "Target Support Files/Pods-ChatMobile/Pods-ChatMobile.debug.xcconfig"; sourceTree = "<group>"; };
+		6D922B91CBD7FBD222CC7113 /* Pods_ChatMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC3917CCA0C3B4DFFDDBB9DE /* Pods-ChatMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatMobile.release.xcconfig"; path = "Target Support Files/Pods-ChatMobile/Pods-ChatMobile.release.xcconfig"; sourceTree = "<group>"; };
 		EC321751268315C8000BB632 /* ChatMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC321754268315C8000BB632 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EC321756268315C8000BB632 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		EC321758268315C8000BB632 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		EC32175B268315C8000BB632 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EC32175D268315C8000BB632 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC321760268315C8000BB632 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EC321762268315C8000BB632 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EC32176B268315F4000BB632 /* FriendsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendsCell.xib; sourceTree = "<group>"; };
+		EC32176C268315F4000BB632 /* FriendsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsCell.swift; sourceTree = "<group>"; };
+		EC32177226831615000BB632 /* friend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = friend.swift; sourceTree = "<group>"; };
+		EC32177326831615000BB632 /* MessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
+		EC32177426831615000BB632 /* RSAKeyPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSAKeyPair.swift; sourceTree = "<group>"; };
+		EC32177526831615000BB632 /* AESKeyModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AESKeyModel.swift; sourceTree = "<group>"; };
+		EC32177626831615000BB632 /* WebSocketNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketNetwork.swift; sourceTree = "<group>"; };
+		EC32177726831615000BB632 /* ChatUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUser.swift; sourceTree = "<group>"; };
+		EC32177F2683161F000BB632 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EC3217802683161F000BB632 /* TextTestView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextTestView.swift; sourceTree = "<group>"; };
+		EC3217812683161F000BB632 /* FriendsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
+		EC3217852683185A000BB632 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +55,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6DF3EE1856E3EAAB33DF227E /* Pods_ChatMobile.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7C6E6C0B391BFF6ACFC98C6B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6D922B91CBD7FBD222CC7113 /* Pods_ChatMobile.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A3A1DB24E1A9318DE0AD2AF0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6A62926FF41D3C01443AEF8B /* Pods-ChatMobile.debug.xcconfig */,
+				BC3917CCA0C3B4DFFDDBB9DE /* Pods-ChatMobile.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		EC321748268315C8000BB632 = {
 			isa = PBXGroup;
 			children = (
 				EC321753268315C8000BB632 /* ChatMobile */,
 				EC321752268315C8000BB632 /* Products */,
+				A3A1DB24E1A9318DE0AD2AF0 /* Pods */,
+				7C6E6C0B391BFF6ACFC98C6B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +100,49 @@
 		EC321753268315C8000BB632 /* ChatMobile */ = {
 			isa = PBXGroup;
 			children = (
+				EC32177E2683161F000BB632 /* Controller */,
+				EC32177126831615000BB632 /* Model */,
+				EC32176A268315F4000BB632 /* Views */,
 				EC321754268315C8000BB632 /* AppDelegate.swift */,
 				EC321756268315C8000BB632 /* SceneDelegate.swift */,
-				EC321758268315C8000BB632 /* ViewController.swift */,
-				EC32175A268315C8000BB632 /* Main.storyboard */,
+				EC3217852683185A000BB632 /* Main.storyboard */,
 				EC32175D268315C8000BB632 /* Assets.xcassets */,
 				EC32175F268315C8000BB632 /* LaunchScreen.storyboard */,
 				EC321762268315C8000BB632 /* Info.plist */,
 			);
 			path = ChatMobile;
+			sourceTree = "<group>";
+		};
+		EC32176A268315F4000BB632 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EC32176B268315F4000BB632 /* FriendsCell.xib */,
+				EC32176C268315F4000BB632 /* FriendsCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		EC32177126831615000BB632 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EC32177226831615000BB632 /* friend.swift */,
+				EC32177326831615000BB632 /* MessageModel.swift */,
+				EC32177426831615000BB632 /* RSAKeyPair.swift */,
+				EC32177526831615000BB632 /* AESKeyModel.swift */,
+				EC32177626831615000BB632 /* WebSocketNetwork.swift */,
+				EC32177726831615000BB632 /* ChatUser.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EC32177E2683161F000BB632 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EC32177F2683161F000BB632 /* ViewController.swift */,
+				EC3217802683161F000BB632 /* TextTestView.swift */,
+				EC3217812683161F000BB632 /* FriendsView.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +152,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EC321765268315C8000BB632 /* Build configuration list for PBXNativeTarget "ChatMobile" */;
 			buildPhases = (
+				6B68EE7CB6ED45B25321E57D /* [CP] Check Pods Manifest.lock */,
 				EC32174D268315C8000BB632 /* Sources */,
 				EC32174E268315C8000BB632 /* Frameworks */,
 				EC32174F268315C8000BB632 /* Resources */,
+				9A7CDB11FE0155674F3927C9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -125,35 +205,79 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC321761268315C8000BB632 /* LaunchScreen.storyboard in Resources */,
+				EC3217862683185A000BB632 /* Main.storyboard in Resources */,
 				EC32175E268315C8000BB632 /* Assets.xcassets in Resources */,
-				EC32175C268315C8000BB632 /* Main.storyboard in Resources */,
+				EC32176D268315F4000BB632 /* FriendsCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6B68EE7CB6ED45B25321E57D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ChatMobile-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9A7CDB11FE0155674F3927C9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ChatMobile/Pods-ChatMobile-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ChatMobile/Pods-ChatMobile-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ChatMobile/Pods-ChatMobile-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EC32174D268315C8000BB632 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC321759268315C8000BB632 /* ViewController.swift in Sources */,
+				EC3217832683161F000BB632 /* TextTestView.swift in Sources */,
+				EC32177C26831615000BB632 /* WebSocketNetwork.swift in Sources */,
+				EC32177926831615000BB632 /* MessageModel.swift in Sources */,
 				EC321755268315C8000BB632 /* AppDelegate.swift in Sources */,
+				EC3217822683161F000BB632 /* ViewController.swift in Sources */,
+				EC32177D26831615000BB632 /* ChatUser.swift in Sources */,
 				EC321757268315C8000BB632 /* SceneDelegate.swift in Sources */,
+				EC32177826831615000BB632 /* friend.swift in Sources */,
+				EC32177A26831615000BB632 /* RSAKeyPair.swift in Sources */,
+				EC32176E268315F4000BB632 /* FriendsCell.swift in Sources */,
+				EC32177B26831615000BB632 /* AESKeyModel.swift in Sources */,
+				EC3217842683161F000BB632 /* FriendsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		EC32175A268315C8000BB632 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				EC32175B268315C8000BB632 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		EC32175F268315C8000BB632 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -283,6 +407,7 @@
 		};
 		EC321766268315C8000BB632 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6A62926FF41D3C01443AEF8B /* Pods-ChatMobile.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -302,6 +427,7 @@
 		};
 		EC321767268315C8000BB632 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BC3917CCA0C3B4DFFDDBB9DE /* Pods-ChatMobile.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
