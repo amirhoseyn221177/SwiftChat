@@ -24,6 +24,8 @@
 		EC3217832683161F000BB632 /* TextTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3217802683161F000BB632 /* TextTestView.swift */; };
 		EC3217842683161F000BB632 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3217812683161F000BB632 /* FriendsView.swift */; };
 		EC3217862683185A000BB632 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC3217852683185A000BB632 /* Main.storyboard */; };
+		EC3217882689CD24000BB632 /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3217872689CD24000BB632 /* KeyChain.swift */; };
+		EC32178A268A9BFF000BB632 /* DataRetrieving.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC321789268A9BFF000BB632 /* DataRetrieving.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +50,8 @@
 		EC3217802683161F000BB632 /* TextTestView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextTestView.swift; sourceTree = "<group>"; };
 		EC3217812683161F000BB632 /* FriendsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		EC3217852683185A000BB632 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		EC3217872689CD24000BB632 /* KeyChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
+		EC321789268A9BFF000BB632 /* DataRetrieving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRetrieving.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +135,8 @@
 				EC32177526831615000BB632 /* AESKeyModel.swift */,
 				EC32177626831615000BB632 /* WebSocketNetwork.swift */,
 				EC32177726831615000BB632 /* ChatUser.swift */,
+				EC3217872689CD24000BB632 /* KeyChain.swift */,
+				EC321789268A9BFF000BB632 /* DataRetrieving.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -262,6 +268,7 @@
 			files = (
 				EC3217832683161F000BB632 /* TextTestView.swift in Sources */,
 				EC32177C26831615000BB632 /* WebSocketNetwork.swift in Sources */,
+				EC32178A268A9BFF000BB632 /* DataRetrieving.swift in Sources */,
 				EC32177926831615000BB632 /* MessageModel.swift in Sources */,
 				EC321755268315C8000BB632 /* AppDelegate.swift in Sources */,
 				EC3217822683161F000BB632 /* ViewController.swift in Sources */,
@@ -272,6 +279,7 @@
 				EC32176E268315F4000BB632 /* FriendsCell.swift in Sources */,
 				EC32177B26831615000BB632 /* AESKeyModel.swift in Sources */,
 				EC3217842683161F000BB632 /* FriendsView.swift in Sources */,
+				EC3217882689CD24000BB632 /* KeyChain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

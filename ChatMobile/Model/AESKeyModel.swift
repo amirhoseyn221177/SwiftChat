@@ -14,13 +14,12 @@ import SwiftyRSA
 class AESKeyModel{
     private var AESInstance : AES? = nil
 
-    
     private var Iv : Array<UInt8>{
         get{
             return AES.randomIV(AES.blockSize)
         }
     }
-    private var AES_key : Array<UInt8>?{
+     var AES_key : Array<UInt8>?{
         get{
             if let finalAesKey = createAESKey(){
                 return finalAesKey

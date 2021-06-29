@@ -13,10 +13,4 @@ class User : Object {
     @objc dynamic var username : String = ""
     let friends = List<friend>()
     var publicKey : PublicKey?
-    
-    
-    
-    
-    
-    
 }

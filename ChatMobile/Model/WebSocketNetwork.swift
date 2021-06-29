@@ -60,6 +60,7 @@ class WebSocketNetwork : NSObject, URLSessionWebSocketDelegate, WebSocketConnect
     
     
     func listen(){
+        
         WebSocketTask.receive { result in
             switch result{
             case .failure(let error):

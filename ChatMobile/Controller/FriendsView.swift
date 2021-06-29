@@ -37,7 +37,7 @@ extension FriendsView : UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "friendCell", for: indexPath) as! FriendsCell
-        cell.textLabel?.text = "mn kioniam"
+        cell.friendCell.text = "abdulGhader"
         return cell
     }
     
