@@ -7,8 +7,17 @@
 
 import UIKit
 import RealmSwift
-class TextTestView: UIViewController,UITableViewDelegate, UINavigationControllerDelegate, UINavigationBarDelegate   {
+class TextTestView: UIViewController,UITableViewDelegate {
 //    let RsaKey = RSAKeyPair()
+    var user : User? {
+        didSet{
+            print("it is set")
+            navigationItem.title = user?.username
+            
+        }
+    }
+    @IBOutlet weak var textMessage: UITextField!
+    @IBOutlet weak var AcessPhoto: UIButton!
     let sender = "Amir sayyar"
     let realm = try! Realm()
     @IBOutlet weak var sendButton: UIButton!
@@ -18,14 +27,14 @@ class TextTestView: UIViewController,UITableViewDelegate, UINavigationController
     var messages: [MessageModel] = []
     var  socket : WebSocketConnection!
     @IBOutlet weak var messagesTable: UITableView!
-    @IBOutlet weak var messsageInput: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
         messagesTable.delegate = self
         messagesTable.dataSource = self
-        messsageInput.delegate = self
-        rsa = RSAKeyPair(AESKey: aes.getAESKey()!)
-        messagesTable.separatorStyle = .none
+        navigationItem.backButtonTitle = "Back"
+        textMessage.delegate = self
+        hideKeyBoardWhenTapped()
+
 
     
         
@@ -56,8 +65,6 @@ class TextTestView: UIViewController,UITableViewDelegate, UINavigationController
         socket = WebSocketNetwork()
         socket.delegate = self
         socket.connect()
-        navigationController?.delegate = self
-        
     
     }
 //
@@ -74,19 +81,7 @@ class TextTestView: UIViewController,UITableViewDelegate, UINavigationController
 //
 //
 //
-    @IBAction func sendPressed(_ sender: UIButton) {
-        if let message = messsageInput.text {
-            let messageModel = MessageModel()
-            messageModel.ContentType = "text"
-            messageModel.textContent = message
-            messageModel.sender = self.sender
-            messageModel.reciever = "elizabeth"
-            messages.append(messageModel)
-            finishingTheEncryption(messageModel)
-            messagesTable.reloadData()
-        }
 
-    }
     
     
     // send data with binarty and send the key and iv with string since they are small
@@ -168,7 +163,6 @@ extension TextTestView : WebSocketConnectionDelegate{
     }
         
     func onError(connection: WebSocketConnection, error: Error) {
-        print(66)
         print(error.localizedDescription)
     }
     
@@ -183,12 +177,23 @@ extension TextTestView : WebSocketConnectionDelegate{
     
 }
 
-extension TextTestView : UITextFieldDelegate {
+
+extension TextTestView :UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        messsageInput.resignFirstResponder()
-        sendPressed(sendButton)
+        textMessage.resignFirstResponder()
         return true
     }
+
+    func hideKeyBoardWhenTapped(){
+        let tap = UITapGestureRecognizer(target: self, action: #selector(TextTestView.closeKeyBoard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+
+    @objc func closeKeyBoard(){
+        view.endEditing(true)
+    }
 }
+
 
 

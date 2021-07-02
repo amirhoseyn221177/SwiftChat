@@ -54,13 +54,14 @@ class Keychain{
                 fatalError("adding the key faced an issue")
             }
         }catch{
+            print("salam")
             print(error.localizedDescription)
         }
    
     }
     
     
-    func getAllKeys(){
+    func getAllKeys()-> [String : Array<UInt8>]?{
         let query = [
           kSecClass: kSecClassInternetPassword,
             kSecAttrAccount: user.username,
@@ -73,24 +74,24 @@ class Keychain{
         guard status == errSecSuccess else {
             fatalError("could not  find the required key")
         }
+        
         let dic = result as? NSDictionary
         if let dicConfirmed = dic{
             let username = dicConfirmed[kSecAttrAccount] ?? ""
             let passwordData = dicConfirmed[kSecValueData] as! Data
-            let password = String(data: passwordData, encoding: .utf8)!
             print("Username: \(username)")
-//            print("Password: \(password)")
             do{
                 guard let dic  = try JSONSerialization.jsonObject(with: passwordData, options: []) as? [String : Array<UInt8>] else{
-                    print("fuck")
-                    return;
+                    print("not able to convert")
+                    return nil
                 }
-                print(dic)
+                return dic
             }catch{
                 print(error.localizedDescription)
             }
         
         }
+        return nil
  
         }
     
