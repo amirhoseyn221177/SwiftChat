@@ -16,8 +16,18 @@ class TextTestView: UIViewController,UITableViewDelegate {
             
         }
     }
+    
+    var photoProcess : PhotoProcess!
+    
+    @IBOutlet weak var ImageCollections: UICollectionView!
+    
+    enum ImageSource {
+        case Library
+        case Camera
+    }
+    
+    var imagePicker : UIImagePickerController!
     @IBOutlet weak var textMessage: UITextField!
-    @IBOutlet weak var AcessPhoto: UIButton!
     let sender = "Amir sayyar"
     let realm = try! Realm()
     @IBOutlet weak var sendButton: UIButton!
@@ -33,8 +43,10 @@ class TextTestView: UIViewController,UITableViewDelegate {
         messagesTable.dataSource = self
         navigationItem.backButtonTitle = "Back"
         textMessage.delegate = self
+        ImageCollections.delegate = self
+        ImageCollections.dataSource = self
         hideKeyBoardWhenTapped()
-
+        
 
     
         
@@ -82,8 +94,23 @@ class TextTestView: UIViewController,UITableViewDelegate {
 //
 //
 
-    
-    
+    @IBAction func choosingPhoto(_ sender: UIButton) {
+        let group = DispatchGroup()
+        photoProcess = PhotoProcess(group: group)
+        
+        
+        group.notify(queue: .main){
+            print("done")
+        }
+        
+        
+
+        
+
+
+        
+        
+    }
     // send data with binarty and send the key and iv with string since they are small
     
     func finishingTheEncryption(_ message : MessageModel){
@@ -188,12 +215,57 @@ extension TextTestView :UITextFieldDelegate {
         let tap = UITapGestureRecognizer(target: self, action: #selector(TextTestView.closeKeyBoard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
+        
     }
 
     @objc func closeKeyBoard(){
         view.endEditing(true)
     }
 }
+
+
+extension TextTestView : UIImagePickerControllerDelegate{
+    
+    func selectImageFrom(_ source:ImageSource = .Library){
+        imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+
+    }
+
+    
+}
+
+
+extension TextTestView : UICollectionViewDelegate , UICollectionViewDataSource{
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath)
+        cell.backgroundColor = .red
+        cell.largeContentTitle = "abpolo"
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath.row)
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        print(258)
+        return 1
+    }
+    
+}
+
+
+
 
 
 
