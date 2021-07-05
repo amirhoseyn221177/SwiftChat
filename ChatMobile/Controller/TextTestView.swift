@@ -17,8 +17,11 @@ class TextTestView: UIViewController,UITableViewDelegate {
         }
     }
     
-    var photoProcess : PhotoProcess!
     
+    var photoProcess : PhotoProcess!
+//    var messagesList : Results<MessageModel>! it is used when we immediatly save the data to the realm dataBase and it will show results live
+    
+    var messageList : [MessageModel] = []
     @IBOutlet weak var ImageCollections: UICollectionView!
     
     enum ImageSource {
@@ -30,13 +33,19 @@ class TextTestView: UIViewController,UITableViewDelegate {
     @IBOutlet weak var textMessage: UITextField!
     let sender = "Amir sayyar"
     let realm = try! Realm()
-    @IBOutlet weak var sendButton: UIButton!
-        let aes = AESKeyModel()
+    let aes = AESKeyModel()
     let message = MessageModel()
     var rsa :RSAKeyPair? = nil
     var messages: [MessageModel] = []
     var  socket : WebSocketConnection!
     @IBOutlet weak var messagesTable: UITableView!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardAppeared(notification:)) ,
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDisappeared(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         messagesTable.delegate = self
@@ -45,8 +54,8 @@ class TextTestView: UIViewController,UITableViewDelegate {
         textMessage.delegate = self
         ImageCollections.delegate = self
         ImageCollections.dataSource = self
+        ImageCollections.isHidden = true
         hideKeyBoardWhenTapped()
-        
 
     
         
@@ -79,6 +88,17 @@ class TextTestView: UIViewController,UITableViewDelegate {
         socket.connect()
     
     }
+    
+    
+    
+    
+    @objc func keyboardAppeared( notification : NSNotification){
+        print("keyboard appeared")
+    }
+    
+    @objc func keyboardDisappeared(notification : NSNotification){
+        print("keyboard Disappeared")
+    }
 //
 //    func savingTextMessages(_ message : String){
 //        do {
@@ -99,7 +119,7 @@ class TextTestView: UIViewController,UITableViewDelegate {
         photoProcess = PhotoProcess(group: group)
         
         
-        group.notify(queue: .main){
+        group.notify(queue: .global()){
             print("done")
         }
         
@@ -111,8 +131,21 @@ class TextTestView: UIViewController,UITableViewDelegate {
         
         
     }
-    // send data with binarty and send the key and iv with string since they are small
     
+    @IBAction func SendMessageButtonPressed(_ sender: UIButton) {
+        if let message = textMessage.text{
+            let newMessage = MessageModel()
+            newMessage.ContentType = "text"
+            newMessage.sender = user?.username
+            newMessage.reciever = "sara"
+            newMessage.textContent = message
+            newMessage.dateTime = Int64(Date().timeIntervalSince1970)
+            print(newMessage)
+            messageList.append(newMessage)
+            self.messagesTable.reloadData()
+            
+        }
+    }
     func finishingTheEncryption(_ message : MessageModel){
         let encryptedAESData = aes.encryptData(message)
         let encryptedAESKey = rsa?.encryptAESKey()
@@ -126,12 +159,6 @@ class TextTestView: UIViewController,UITableViewDelegate {
         let decoded  = String(data:dicString, encoding: .utf8)
         socket.sendText(decoded!)
         socket.sendBinary(Data(encryptedAESData!))
-
-
-        
-        
-        
-        
     }
     
     
@@ -154,15 +181,23 @@ class TextTestView: UIViewController,UITableViewDelegate {
 
 extension TextTestView :UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages.count
+        return messageList.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "message")
-        cell?.textLabel?.text = messages[indexPath.row].textContent
-        return cell!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "message", for : indexPath)
+        if let messagemodel = messageList[indexPath.row].textContent{
+            cell.textLabel?.text = messagemodel
+        }else{
+            print(175)
+            cell.textLabel?.text = "salam"
+
+        }
+        return cell
         
     }
+    
+    
     
     
     
@@ -212,15 +247,17 @@ extension TextTestView :UITextFieldDelegate {
     }
 
     func hideKeyBoardWhenTapped(){
-        let tap = UITapGestureRecognizer(target: self, action: #selector(TextTestView.closeKeyBoard))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(closeKeyBoard))
         tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
+        messagesTable.addGestureRecognizer(tap)
         
     }
 
     @objc func closeKeyBoard(){
         view.endEditing(true)
     }
+    
+    
 }
 
 
@@ -258,7 +295,6 @@ extension TextTestView : UICollectionViewDelegate , UICollectionViewDataSource{
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        print(258)
         return 1
     }
     

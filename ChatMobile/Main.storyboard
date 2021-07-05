@@ -104,6 +104,17 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qHY-qA-nmp">
                                 <rect key="frame" x="0.0" y="88" width="414" height="734"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="message" id="fLz-P0-kvZ">
+                                        <rect key="frame" x="0.0" y="24.333333969116211" width="414" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fLz-P0-kvZ" id="nzO-2i-ziX">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.89097313690000002" green="0.066785298840000007" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7O9-Pp-mFM" userLabel="MessageView">
                                 <rect key="frame" x="0.0" y="822" width="414" height="74"/>
@@ -116,13 +127,16 @@
                                             <action selector="choosingPhoto:" destination="nBK-7J-4qM" eventType="touchUpInside" id="YhV-5E-6YK"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xTV-bY-ihO" userLabel="Send">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xTV-bY-ihO" userLabel="Send">
                                         <rect key="frame" x="386" y="8.9999999999999964" width="20" height="23.333333333333336"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="20" id="Ltf-MF-fYx"/>
                                             <constraint firstAttribute="height" constant="24" id="aKe-eB-tJh"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="paperplane" catalog="system"/>
+                                        <connections>
+                                            <action selector="SendMessageButtonPressed:" destination="nBK-7J-4qM" eventType="touchUpInside" id="J4K-ic-jiN"/>
+                                        </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="L1i-7w-VcU">
                                         <rect key="frame" x="47" y="8" width="331" height="34"/>
@@ -180,7 +194,6 @@
                     <connections>
                         <outlet property="ImageCollections" destination="9jJ-BK-TEh" id="O2S-xl-96N"/>
                         <outlet property="messagesTable" destination="qHY-qA-nmp" id="csT-G0-iHc"/>
-                        <outlet property="sendButton" destination="xTV-bY-ihO" id="7TM-4x-1L4"/>
                         <outlet property="textMessage" destination="L1i-7w-VcU" id="r3o-96-0EB"/>
                     </connections>
                 </viewController>
