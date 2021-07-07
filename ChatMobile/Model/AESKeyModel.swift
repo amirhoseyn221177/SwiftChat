@@ -14,21 +14,18 @@ import SwiftyRSA
 class AESKeyModel{
     private var AESInstance : AES? = nil
 
-    private var Iv : Array<UInt8>{
-        get{
-            return AES.randomIV(AES.blockSize)
-        }
-    }
-     var AES_key : Array<UInt8>?{
-        get{
-            if let finalAesKey = createAESKey(){
-                return finalAesKey
-            }
-            return nil
-        }
-    }
+     var Iv : Array<UInt8>?
+    
+     var AES_key : Array<UInt8>?
     
     
+    init(iv : Array<UInt8>?) {
+        if let iv = iv {
+            self.Iv = iv
+        }else{
+            self.Iv = createIV()
+        }
+    }
 
     private var randomBytePassword : Array<UInt8>?{
         get{
@@ -44,19 +41,18 @@ class AESKeyModel{
     private var encryptedDataBase64 : String? = ""
     
     
-
-    func getIV()-> Array<UInt8>{
-        return self.Iv
+    
+    func createIV() -> Array<UInt8>{
+        return AES.randomIV(AES.blockSize)
     }
     
     
     func createAESKey()-> Array<UInt8>? {
   
         do{
-            if let rp = randomBytePassword , let rs = randomSalt{
+            if let rp = randomBytePassword , let rs = randomSalt , let iv = Iv{
                   let aeskey = try PKCS5.PBKDF2(password: rp, salt: rs, iterations: 4096, keyLength: 32, variant: .sha256).calculate()
-                
-                AESInstance = try AES(key:aeskey , blockMode: CBC(iv: Iv), padding: .pkcs5)
+                CreateAesKeyInstance(AesKey: aeskey, iv: iv)
             return aeskey
             }
         }catch{
@@ -83,9 +79,19 @@ class AESKeyModel{
         return self.AES_key
     }
     
+    func CreateAesKeyInstance (AesKey : Array<UInt8>, iv : Array<UInt8>){
+        do{
+            AESInstance = try AES(key:AesKey , blockMode: CBC(iv: iv), padding: .pkcs5)
+        }catch{
+            print(error.localizedDescription)
+        }
+       
+    }
     
-    func encryptData(_ message : MessageModel)-> Array<UInt8>?{
+    
+    func encryptData(_ message : MessageModel, AesKey : Array<UInt8>, iv : Array<UInt8>)-> Array<UInt8>?{
         var encrypted : Array<UInt8>? = nil
+        CreateAesKeyInstance(AesKey: AesKey, iv: iv)
         do {
             if let byteData : Array<UInt8> = message.textContent?.bytes{
                 encrypted = try AESInstance?.encrypt(byteData)
@@ -102,8 +108,9 @@ class AESKeyModel{
     }
     
     
-    func decryptData(_ encryptedData : Array<UInt8>?)-> String?{
+    func decryptData(_ encryptedData : Array<UInt8>?, AesKey: Array<UInt8>, iv:Array<UInt8>)-> String?{
         var message : String? = ""
+        CreateAesKeyInstance(AesKey: AesKey, iv: iv)
         do{
             let decryptedData = try AESInstance?.decrypt(encryptedData!)
             message = String(decoding: Data(decryptedData!), as: UTF8.self)

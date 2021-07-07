@@ -10,33 +10,20 @@ import Foundation
 
 class Keychain{
     var tag : String!
-    var RSAPrivateKey:Array<UInt8>
-    var RSAPublicKey : Array<UInt8>
     var user : User
-    var RSAPublicSize : Int {
-        get{
-            self.RSAPublicKey.count
-        }
-    }
-    var RSAPrivateSize : Int{
-        get{
-            self.RSAPrivateKey.count
-        }
-    }
     
-    
-    init(user : User,prv : Array<UInt8>,pub : Array<UInt8>) {
+    init(user : User) {
         self.user = user
-        self.RSAPrivateKey = prv
-        self.RSAPublicKey = pub
     }
     
     
     
-    func saveToKeyChain(){
+    func saveToKeyChain(RSAPrivateKey:Array<UInt8>,RSAPublicKey : Array<UInt8>,AESKey : Array<UInt8>){
+        print(user)
         let KeyObj :  [ String : Array<UInt8>] = [
             "private " : RSAPrivateKey,
-            "public" : RSAPublicKey
+            "public" : RSAPublicKey,
+            "AES Key" : AESKey
         ]
         print(KeyObj)
         do{
@@ -54,7 +41,7 @@ class Keychain{
                 fatalError("adding the key faced an issue")
             }
         }catch{
-            print("salam")
+        
             print(error.localizedDescription)
         }
    
@@ -72,7 +59,7 @@ class Keychain{
         var result: AnyObject?
         let status = SecItemCopyMatching(query, &result)
         guard status == errSecSuccess else {
-            fatalError("could not  find the required key")
+            return nil
         }
         
         let dic = result as? NSDictionary
@@ -85,6 +72,7 @@ class Keychain{
                     print("not able to convert")
                     return nil
                 }
+       
                 return dic
             }catch{
                 print(error.localizedDescription)

@@ -20,13 +20,7 @@ class RSAKeyPair{
             return CreateRSAKeyPair().1!
         }
     }
-    private var AESKey : Array<UInt8>
-    
-    init(AESKey:Array<UInt8>) {
-        self.AESKey = AESKey
-    }
-    
-    
+ 
     
     func CreateRSAKeyPair()->(PrivateKey?,PublicKey?){
         var privateKey : PrivateKey? = nil
@@ -66,9 +60,10 @@ class RSAKeyPair{
     }
     
     
-    func encryptAESKey()-> Array<UInt8>?{
+    func encryptAESKey(aesKey : Array<UInt8>)-> Array<UInt8>?{
         do{
-                let clear = ClearMessage(data: Data(AESKey))
+            
+                let clear = ClearMessage(data: Data(aesKey))
                 let encrypted = try clear.encrypted(with: publicKey, padding: .OAEP)
                 return encrypted.data.bytes
             

@@ -17,5 +17,6 @@ class MessageModel : Object {
     @objc dynamic var reciever : String?
     @objc dynamic var dateTime : Int64 = 0
     @objc dynamic var token : String!
-    var recieverPublicRSAKey : PublicKey?
+    @objc dynamic var recieverPublicRSAKey : Data?
+    @objc dynamic var iv : Data?
 }

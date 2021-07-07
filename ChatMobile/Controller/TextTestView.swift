@@ -11,12 +11,14 @@ class TextTestView: UIViewController,UITableViewDelegate {
 //    let RsaKey = RSAKeyPair()
     var user : User? {
         didSet{
-            print("it is set")
             navigationItem.title = user?.username
             
         }
     }
     
+    var requiredKeys : [String : Array<UInt8>] = [:]
+    
+    var keychainModel : Keychain?
     
     var photoProcess : PhotoProcess!
 //    var messagesList : Results<MessageModel>! it is used when we immediatly save the data to the realm dataBase and it will show results live
@@ -29,13 +31,16 @@ class TextTestView: UIViewController,UITableViewDelegate {
         case Camera
     }
     
+    let aes = AESKeyModel(iv: nil)
+    var rsa :RSAKeyPair? = RSAKeyPair()
+
+    
     var imagePicker : UIImagePickerController!
     @IBOutlet weak var textMessage: UITextField!
     let sender = "Amir sayyar"
     let realm = try! Realm()
-    let aes = AESKeyModel()
     let message = MessageModel()
-    var rsa :RSAKeyPair? = nil
+
     var messages: [MessageModel] = []
     var  socket : WebSocketConnection!
     @IBOutlet weak var messagesTable: UITableView!
@@ -48,6 +53,7 @@ class TextTestView: UIViewController,UITableViewDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         messagesTable.delegate = self
         messagesTable.dataSource = self
         navigationItem.backButtonTitle = "Back"
@@ -55,28 +61,12 @@ class TextTestView: UIViewController,UITableViewDelegate {
         ImageCollections.delegate = self
         ImageCollections.dataSource = self
         ImageCollections.isHidden = true
+        keychainModel = Keychain(user: user!)
         hideKeyBoardWhenTapped()
+        getAllKeysForEncryption()
 
     
-        
-//        print("bytes of data")
-//        print(message.textContent?.bytes)
-//        aes.message = message
-//        print("This is Binary AES")
-//        print(aes.getAESKey())
-//        var encryptedDataAES = aes.encryptData()
-//        var encrytedAES = rsa?.encryptAESKey()
-//        var decryptedAES = rsa?.decryptAESKey(encrytedAES!)
-//
-//        print(encryptedDataAES!)
-//        print("encrypted AES --------------------------------")
-//        print(encrytedAES!)
-//        print("decrypted AES binary")
-//        print(decryptedAES)
-//        var decryptedData = aes.decryptData(encryptedDataAES)
-//        print("decrypted data")
-//        print(decryptedData)
-        
+
         
 
         
@@ -140,28 +130,13 @@ class TextTestView: UIViewController,UITableViewDelegate {
             newMessage.reciever = "sara"
             newMessage.textContent = message
             newMessage.dateTime = Int64(Date().timeIntervalSince1970)
-            print(newMessage)
             messageList.append(newMessage)
+            encryptingTheMessage(newMessage)
             self.messagesTable.reloadData()
             
         }
     }
-    func finishingTheEncryption(_ message : MessageModel){
-        let encryptedAESData = aes.encryptData(message)
-        let encryptedAESKey = rsa?.encryptAESKey()
-        let iv = aes.getIV()
-        let dic : [String : Array<UInt8>] = [
-            "iv" : iv,
-            "key" : encryptedAESKey!,
-            
-        ]
-        let dicString = try! JSONSerialization.data(withJSONObject: dic, options: [])
-        let decoded  = String(data:dicString, encoding: .utf8)
-        socket.sendText(decoded!)
-        socket.sendBinary(Data(encryptedAESData!))
-    }
-    
-    
+
     
     
     
@@ -204,13 +179,13 @@ extension TextTestView :UITableViewDataSource{
 }
 
 
+
 extension TextTestView : WebSocketConnectionDelegate{
     func onDisconnected(connection: WebSocketConnection, reason: Data?, error: Error?) {
         print("fuck we got disconnected !!!!")
         DispatchQueue.main.async {
             self.navigationItem.title = "Disconnected"
             self.navigationController?.navigationBar.barTintColor = UIColor.red
-
         }
 
     }
@@ -296,6 +271,75 @@ extension TextTestView : UICollectionViewDelegate , UICollectionViewDataSource{
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
+    }
+    
+}
+
+// MARK:  - All Encryption Stuff
+extension TextTestView {
+    
+//        print("bytes of data")
+//        print(message.textContent?.bytes)
+//        aes.message = message
+//        print("This is Binary AES")
+//        print(aes.getAESKey())
+//        var encryptedDataAES = aes.encryptData()
+//        var encrytedAES = rsa?.encryptAESKey()
+//        var decryptedAES = rsa?.decryptAESKey(encrytedAES!)
+//
+//        print(encryptedDataAES!)
+//        print("encrypted AES --------------------------------")
+//        print(encrytedAES!)
+//        print("decrypted AES binary")
+//        print(decryptedAES)
+//        var decryptedData = aes.decryptData(encryptedDataAES)
+//        print("decrypted data")
+//        print(decryptedData)
+    
+    func getAllKeysForEncryption(){
+            let dic : [String : Array<UInt8>]? = keychainModel?.getAllKeys()
+        if (dic != nil) {
+            requiredKeys = dic!
+        }else{
+            print( "they could not find it ")
+        }
+        
+    }
+    
+    func saveKeysToChain (){
+        do{
+            let aesKey = aes.createAESKey()
+        
+            let rsaPrivate = try rsa?.getPrivateKey()?.data().bytes
+            let rsaPublic = try rsa?.getPublicKey()?.data().bytes
+            if let rsaPrivate = rsaPrivate , let rsaPublic = rsaPublic , let aesKey = aesKey {
+                keychainModel?.saveToKeyChain(RSAPrivateKey: rsaPrivate, RSAPublicKey: rsaPublic, AESKey: aesKey)
+            }
+        }catch{
+            print(error.localizedDescription)
+        }
+    }
+    
+    func encryptingTheMessage (_ message : MessageModel){
+        if requiredKeys["AES Key"] != nil , aes.Iv != nil {
+            message.iv = Data(aes.Iv!)
+            let encryptedAESData = aes.encryptData(message, AesKey: requiredKeys["AES Key"]!, iv: aes.Iv!)
+            let encryptedAESKey = rsa?.encryptAESKey(aesKey: requiredKeys["AES Key"]!)
+            if encryptedAESData != nil , encryptedAESKey != nil{
+                do{
+                    let allDataKey : [ String : Array<UInt8>] = ["data" : encryptedAESData! , "key":encryptedAESKey!]
+                    let json = try JSONSerialization.data(withJSONObject: allDataKey, options: .prettyPrinted)
+                    let jsonData = String (data: json, encoding: .utf8)?.data(using: .utf8)
+                    socket.sendBinary(jsonData!)
+                    
+                }catch{
+                    print(error.localizedDescription)
+                }
+
+            }
+           
+            
+        }
     }
     
 }
