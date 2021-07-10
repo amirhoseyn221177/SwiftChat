@@ -62,7 +62,6 @@ class RSAKeyPair{
     
     func encryptAESKey(aesKey : Array<UInt8>)-> Array<UInt8>?{
         do{
-            
                 let clear = ClearMessage(data: Data(aesKey))
                 let encrypted = try clear.encrypted(with: publicKey, padding: .OAEP)
                 return encrypted.data.bytes

@@ -34,7 +34,14 @@ class ViewController: UIViewController{
 //
 //        }
         
+//        NotificationCenter.default.addObserver(self, selector: #selector(emailIsBeingEdited), name: UITextField.textDidChangeNotification, object: emailTextInput)
+        
     }
+    
+//
+//    @objc func emailIsBeingEdited(){
+//        print(emailTextInput.text)
+//    }
 
     @IBAction func settinUsername(_ sender: Any) {
         

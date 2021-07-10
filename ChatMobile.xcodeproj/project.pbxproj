@@ -14,7 +14,7 @@
 		EC321761268315C8000BB632 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC32175F268315C8000BB632 /* LaunchScreen.storyboard */; };
 		EC32176D268315F4000BB632 /* FriendsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC32176B268315F4000BB632 /* FriendsCell.xib */; };
 		EC32176E268315F4000BB632 /* FriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC32176C268315F4000BB632 /* FriendsCell.swift */; };
-		EC32177826831615000BB632 /* friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC32177226831615000BB632 /* friend.swift */; };
+		EC32177826831615000BB632 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC32177226831615000BB632 /* Friend.swift */; };
 		EC32177926831615000BB632 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC32177326831615000BB632 /* MessageModel.swift */; };
 		EC32177A26831615000BB632 /* RSAKeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC32177426831615000BB632 /* RSAKeyPair.swift */; };
 		EC32177B26831615000BB632 /* AESKeyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC32177526831615000BB632 /* AESKeyModel.swift */; };
@@ -26,6 +26,7 @@
 		EC3217862683185A000BB632 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC3217852683185A000BB632 /* Main.storyboard */; };
 		EC3217882689CD24000BB632 /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3217872689CD24000BB632 /* KeyChain.swift */; };
 		EC32178A268A9BFF000BB632 /* DataRetrieving.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC321789268A9BFF000BB632 /* DataRetrieving.swift */; };
+		EC5357FF26997AA20029383B /* UserRest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5357FE26997AA20029383B /* UserRest.swift */; };
 		ECC124232691908200B17ABF /* PhotoProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC124222691908200B17ABF /* PhotoProcess.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,7 +42,7 @@
 		EC321762268315C8000BB632 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EC32176B268315F4000BB632 /* FriendsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendsCell.xib; sourceTree = "<group>"; };
 		EC32176C268315F4000BB632 /* FriendsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsCell.swift; sourceTree = "<group>"; };
-		EC32177226831615000BB632 /* friend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = friend.swift; sourceTree = "<group>"; };
+		EC32177226831615000BB632 /* Friend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		EC32177326831615000BB632 /* MessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
 		EC32177426831615000BB632 /* RSAKeyPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSAKeyPair.swift; sourceTree = "<group>"; };
 		EC32177526831615000BB632 /* AESKeyModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AESKeyModel.swift; sourceTree = "<group>"; };
@@ -53,6 +54,7 @@
 		EC3217852683185A000BB632 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		EC3217872689CD24000BB632 /* KeyChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
 		EC321789268A9BFF000BB632 /* DataRetrieving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRetrieving.swift; sourceTree = "<group>"; };
+		EC5357FE26997AA20029383B /* UserRest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRest.swift; sourceTree = "<group>"; };
 		ECC124222691908200B17ABF /* PhotoProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProcess.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -106,6 +108,7 @@
 		EC321753268315C8000BB632 /* ChatMobile */ = {
 			isa = PBXGroup;
 			children = (
+				EC5357FD26997A730029383B /* RestController */,
 				EC32177E2683161F000BB632 /* Controller */,
 				EC32177126831615000BB632 /* Model */,
 				EC32176A268315F4000BB632 /* Views */,
@@ -131,7 +134,7 @@
 		EC32177126831615000BB632 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				EC32177226831615000BB632 /* friend.swift */,
+				EC32177226831615000BB632 /* Friend.swift */,
 				EC32177326831615000BB632 /* MessageModel.swift */,
 				EC32177426831615000BB632 /* RSAKeyPair.swift */,
 				EC32177526831615000BB632 /* AESKeyModel.swift */,
@@ -152,6 +155,14 @@
 				EC3217812683161F000BB632 /* FriendsView.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		EC5357FD26997A730029383B /* RestController */ = {
+			isa = PBXGroup;
+			children = (
+				EC5357FE26997AA20029383B /* UserRest.swift */,
+			);
+			path = RestController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,9 +286,10 @@
 				EC32177926831615000BB632 /* MessageModel.swift in Sources */,
 				EC321755268315C8000BB632 /* AppDelegate.swift in Sources */,
 				EC3217822683161F000BB632 /* ViewController.swift in Sources */,
+				EC5357FF26997AA20029383B /* UserRest.swift in Sources */,
 				EC32177D26831615000BB632 /* ChatUser.swift in Sources */,
 				EC321757268315C8000BB632 /* SceneDelegate.swift in Sources */,
-				EC32177826831615000BB632 /* friend.swift in Sources */,
+				EC32177826831615000BB632 /* Friend.swift in Sources */,
 				EC32177A26831615000BB632 /* RSAKeyPair.swift in Sources */,
 				EC32176E268315F4000BB632 /* FriendsCell.swift in Sources */,
 				EC32177B26831615000BB632 /* AESKeyModel.swift in Sources */,

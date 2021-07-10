@@ -9,17 +9,12 @@ import Foundation
 
 
 class Keychain{
-    var tag : String!
-    var user : User
+
     
-    init(user : User) {
-        self.user = user
-    }
+  
     
     
-    
-    func saveToKeyChain(RSAPrivateKey:Array<UInt8>,RSAPublicKey : Array<UInt8>,AESKey : Array<UInt8>){
-        print(user)
+    func saveToKeyChain(RSAPrivateKey:Array<UInt8>,RSAPublicKey : Array<UInt8>,AESKey : Array<UInt8>, username : String){
         let KeyObj :  [ String : Array<UInt8>] = [
             "private " : RSAPrivateKey,
             "public" : RSAPublicKey,
@@ -31,7 +26,7 @@ class Keychain{
             let StringJSon = String(data: jsonKeys, encoding: .utf8)
             let query  =  [
                 kSecValueData: StringJSon?.data(using: .utf8) as Any,
-                kSecAttrAccount: user.username,
+                kSecAttrAccount: username,
                 kSecClass: kSecClassInternetPassword,
                 kSecReturnData: true,
                 kSecReturnAttributes: true
@@ -48,10 +43,10 @@ class Keychain{
     }
     
     
-    func getAllKeys()-> [String : Array<UInt8>]?{
+    func getAllKeys(username : String)-> [String : Array<UInt8>]?{
         let query = [
           kSecClass: kSecClassInternetPassword,
-            kSecAttrAccount: user.username,
+            kSecAttrAccount: username,
           kSecReturnAttributes: true,
           kSecReturnData: true,
         ] as CFDictionary
@@ -85,16 +80,60 @@ class Keychain{
     
     
     
-    func delete (){
+    func delete (username : String){
         let query = [
             kSecClass: kSecClassInternetPassword,
-            kSecAttrAccount: user.username
+            kSecAttrAccount: username
         ] as CFDictionary
         
         let status = SecItemDelete(query)
         guard status == errSecSuccess else {
             fatalError("deleting the key faced a problem")
         }
+    }
+    
+    
+    
+    func saveTheToken(username : String,token : String){
+        
+        let query = [
+            kSecClass : kSecClassInternetPassword,
+            kSecAttrAccount : username,
+            kSecReturnAttributes : true,
+            kSecReturnData : true,
+            kSecValueData : token.data(using: .utf8) as Any
+        ] as CFDictionary
+        
+        let status = SecItemAdd(query, nil)
+        
+        guard status == errSecSuccess else {
+            fatalError("could not save the token")
+        }
+    }
+    
+    
+    func getToken(username : String)-> String?{
+        let query = [
+            kSecClass : kSecClassInternetPassword,
+            kSecAttrAccount : username,
+            kSecReturnData : true,
+            kSecReturnAttributes : true
+        ] as CFDictionary
+        
+        var result: AnyObject?
+
+        let status = SecItemCopyMatching(query, &result)
+        guard status == errSecSuccess else {
+            fatalError("could not find the token")
+        }
+        let dic = result as? NSDictionary
+        if let dicConfirmed = dic {
+            let tokenData = dicConfirmed[kSecValueData] as! Data
+            let token  = String(decoding: tokenData, as: UTF8.self)
+            return token
+        }
+        return nil
+        
     }
      
 }

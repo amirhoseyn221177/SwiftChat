@@ -11,6 +11,6 @@ import SwiftyRSA
 class User : Object {
     @objc dynamic var name: String = ""
     @objc dynamic var username : String = ""
-    let friends = List<friend>()
-    var publicKey : PublicKey?
+    @objc dynamic var  publicKey : Data?
+    let friends = List<Friend>()
 }

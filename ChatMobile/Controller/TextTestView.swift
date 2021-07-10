@@ -9,12 +9,14 @@ import UIKit
 import RealmSwift
 class TextTestView: UIViewController,UITableViewDelegate {
 //    let RsaKey = RSAKeyPair()
-    var user : User? {
+    var friend : Friend? {
         didSet{
-            navigationItem.title = user?.username
+            navigationItem.title = friend?.username
             
         }
     }
+    
+    var user = User()
     
     var requiredKeys : [String : Array<UInt8>] = [:]
     
@@ -53,7 +55,8 @@ class TextTestView: UIViewController,UITableViewDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        user.name = "amir"
+        user.username = "amir2211"
         messagesTable.delegate = self
         messagesTable.dataSource = self
         navigationItem.backButtonTitle = "Back"
@@ -61,7 +64,7 @@ class TextTestView: UIViewController,UITableViewDelegate {
         ImageCollections.delegate = self
         ImageCollections.dataSource = self
         ImageCollections.isHidden = true
-        keychainModel = Keychain(user: user!)
+        keychainModel = Keychain()
         hideKeyBoardWhenTapped()
         getAllKeysForEncryption()
 
@@ -126,7 +129,7 @@ class TextTestView: UIViewController,UITableViewDelegate {
         if let message = textMessage.text{
             let newMessage = MessageModel()
             newMessage.ContentType = "text"
-            newMessage.sender = user?.username
+            newMessage.sender = user.username
             newMessage.reciever = "sara"
             newMessage.textContent = message
             newMessage.dateTime = Int64(Date().timeIntervalSince1970)
@@ -297,7 +300,7 @@ extension TextTestView {
 //        print(decryptedData)
     
     func getAllKeysForEncryption(){
-            let dic : [String : Array<UInt8>]? = keychainModel?.getAllKeys()
+        let dic : [String : Array<UInt8>]? = keychainModel?.getAllKeys(username: user.username)
         if (dic != nil) {
             requiredKeys = dic!
         }else{
@@ -313,7 +316,7 @@ extension TextTestView {
             let rsaPrivate = try rsa?.getPrivateKey()?.data().bytes
             let rsaPublic = try rsa?.getPublicKey()?.data().bytes
             if let rsaPrivate = rsaPrivate , let rsaPublic = rsaPublic , let aesKey = aesKey {
-                keychainModel?.saveToKeyChain(RSAPrivateKey: rsaPrivate, RSAPublicKey: rsaPublic, AESKey: aesKey)
+                keychainModel?.saveToKeyChain(RSAPrivateKey: rsaPrivate, RSAPublicKey: rsaPublic, AESKey: aesKey, username: user.username)
             }
         }catch{
             print(error.localizedDescription)
@@ -325,13 +328,12 @@ extension TextTestView {
             message.iv = Data(aes.Iv!)
             let encryptedAESData = aes.encryptData(message, AesKey: requiredKeys["AES Key"]!, iv: aes.Iv!)
             let encryptedAESKey = rsa?.encryptAESKey(aesKey: requiredKeys["AES Key"]!)
-            if encryptedAESData != nil , encryptedAESKey != nil{
+            if let encryptedAESData = encryptedAESData  , let encryptedAESKey = encryptedAESKey{
                 do{
-                    let allDataKey : [ String : Array<UInt8>] = ["data" : encryptedAESData! , "key":encryptedAESKey!]
+                    let allDataKey : [ String : Array<UInt8>] = ["data" : encryptedAESData , "key":encryptedAESKey]
                     let json = try JSONSerialization.data(withJSONObject: allDataKey, options: .prettyPrinted)
                     let jsonData = String (data: json, encoding: .utf8)?.data(using: .utf8)
                     socket.sendBinary(jsonData!)
-                    
                 }catch{
                     print(error.localizedDescription)
                 }
