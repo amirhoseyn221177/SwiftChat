@@ -21,21 +21,33 @@ class DataRetrieving {
   
     
     
-    func createUser(friend : Friend){
+    func createFriend(friend : Friend,user : User){
            try! realm?.write {
                 realm?.add(friend)
+                realm?.add(user)
             }
     }
     
+    func createUser (user : User){
+        try! realm?.write({
+            realm?.add(user)
+        })
+    }
     
-    func getUser(username : String)-> Friend?{
+    
+    func getFriend(username : String)-> Friend?{
         let scope =  realm?.objects(Friend.self).filter("username ==%@",username)
         return scope?.first
     }
     
-    func getAllUser()->Results<Friend>?{
-        let scope = realm?.objects(Friend.self)
+    func getAllFriends(mainUser : String)->Results<Friend>?{
+        let scope = realm?.objects(Friend.self).filter("ANY mainUser.username ==%@" , mainUser)
         return scope
+    }
+    
+    func getUser ()-> User?{
+        let scope = realm?.objects(User.self)
+        return scope?.first
     }
     
 }

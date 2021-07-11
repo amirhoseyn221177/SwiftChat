@@ -10,43 +10,35 @@ import UIKit
 class ViewController: UIViewController{
 
     
-    @IBOutlet weak var emailTextInput: UITextField!
+    @IBOutlet weak var nameInput: UITextField!
+    @IBOutlet weak var passwordInput: UITextField!
     @IBOutlet weak var usernameTextinput: UITextField!
-//    var aes : AESKeyModel?
-//    var rsa : RSAKeyPair?
-//    var user = User()
-//    var keyChain : Keychain?
+    let dateRet  = DataRetrieving()
     override func viewDidLoad() {
         super.viewDidLoad()
-//        aes = AESKeyModel()
-//        user.name = "Amir"
-//        user.username = "Amir 2211"
-//        let aesKey = aes?.AES_key
-//        if let aesKey = aesKey{
-//            rsa = RSAKeyPair(AESKey: aesKey)
-//            let pairOfKeys = rsa?.CreateRSAKeyPair()
-//            let publicKey = try! pairOfKeys?.1?.data().bytes
-//            let privateKey = try! pairOfKeys?.0?.data().bytes
-//            keyChain = Keychain(user: user, prv: privateKey!, pub: publicKey!)
-//            keyChain?.saveToKeyChain()
-//            keyChain?.getAllKeys()
-//            keyChain?.delete()
-//
-//        }
-        
-//        NotificationCenter.default.addObserver(self, selector: #selector(emailIsBeingEdited), name: UITextField.textDidChangeNotification, object: emailTextInput)
-        
+        loginUser()
     }
-    
-//
-//    @objc func emailIsBeingEdited(){
-//        print(emailTextInput.text)
-//    }
-
     @IBAction func settinUsername(_ sender: Any) {
-        
-        
+        let user  = User()
+        user.name = nameInput.text!
+        user.username = usernameTextinput.text!
+        user.password = passwordInput.text!
+        let userRest = UserRest(user: user)
+        userRest.createUser()
     }
     
-}
+    func loginUser(){
+        let mainUser = dateRet.getUser()
+        if mainUser == nil{
+            let alert = UIAlertController(title: "sheeet", message: "aint no user found  damn ", preferredStyle: .alert)
+            self.present(alert, animated: true, completion: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now()+4) {
+                alert.dismiss(animated: true, completion: nil)
+
+            }
+        }
+//        performSegue(withIdentifier: <#T##String#>, sender: <#T##Any?#>)
+    }
+    
+    }
 

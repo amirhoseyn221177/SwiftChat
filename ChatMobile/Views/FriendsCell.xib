@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -11,21 +11,24 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="friendCell" rowHeight="210" id="KGk-i7-Jjw" customClass="FriendsCell" customModule="ChatMobile" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="586" height="210"/>
+            <rect key="frame" x="0.0" y="0.0" width="562" height="210"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="586" height="210"/>
+                <rect key="frame" x="0.0" y="0.0" width="562" height="210"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="Pda-rV-4Oy">
-                        <rect key="frame" x="0.0" y="15" width="576" height="180"/>
+                        <rect key="frame" x="0.0" y="0.0" width="557" height="210"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tv9-P9-qFv">
-                                <rect key="frame" x="25" y="13.5" width="451" height="153"/>
+                                <rect key="frame" x="15" y="10" width="402" height="190"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YgE-KF-LzS">
-                                        <rect key="frame" x="8" y="10" width="433" height="133"/>
+                                        <rect key="frame" x="8" y="10" width="386" height="170"/>
                                         <color key="tintColor" systemColor="systemGroupedBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="386" id="vOM-JF-Yzg"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -34,35 +37,38 @@
                                 <color key="backgroundColor" systemColor="linkColor"/>
                                 <color key="tintColor" systemColor="linkColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="YgE-KF-LzS" secondAttribute="bottom" constant="10" id="6MC-za-zot"/>
-                                    <constraint firstItem="YgE-KF-LzS" firstAttribute="top" secondItem="Tv9-P9-qFv" secondAttribute="top" constant="10" id="bMZ-cE-VFB"/>
-                                    <constraint firstItem="YgE-KF-LzS" firstAttribute="leading" secondItem="Tv9-P9-qFv" secondAttribute="leading" constant="8" id="lYC-2x-hp8"/>
-                                    <constraint firstAttribute="trailing" secondItem="YgE-KF-LzS" secondAttribute="trailing" constant="10" id="uu9-Ox-zcB"/>
+                                    <constraint firstItem="YgE-KF-LzS" firstAttribute="top" secondItem="Tv9-P9-qFv" secondAttribute="top" constant="10" id="4e2-Fn-6oy"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="370" id="9Sr-5y-go2"/>
+                                    <constraint firstItem="YgE-KF-LzS" firstAttribute="leading" secondItem="Tv9-P9-qFv" secondAttribute="leadingMargin" id="l6l-wE-Stv"/>
+                                    <constraint firstAttribute="trailing" secondItem="YgE-KF-LzS" secondAttribute="trailing" constant="8" id="lMZ-uT-hpK"/>
+                                    <constraint firstItem="YgE-KF-LzS" firstAttribute="centerY" secondItem="Tv9-P9-qFv" secondAttribute="centerY" id="scH-Sb-eNC"/>
                                 </constraints>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.up.bin.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="1lk-EW-VFk">
-                                <rect key="frame" x="516" y="56" width="60" height="67.5"/>
+                                <rect key="frame" x="457" y="41.666666666666657" width="60" height="127"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="70" id="VFt-aF-6rp"/>
-                                    <constraint firstAttribute="width" constant="60" id="Wgw-na-tCK"/>
+                                    <constraint firstAttribute="height" constant="130" id="4FJ-Ed-y2i"/>
+                                    <constraint firstAttribute="width" constant="60" id="OLS-7W-MCH"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="Tv9-P9-qFv" secondAttribute="trailing" constant="100" id="8q8-3N-1kC"/>
-                            <constraint firstAttribute="trailing" secondItem="1lk-EW-VFk" secondAttribute="trailing" id="GNz-Ik-wux"/>
-                            <constraint firstItem="Tv9-P9-qFv" firstAttribute="centerX" secondItem="Pda-rV-4Oy" secondAttribute="centerX" id="LfF-n9-Av0"/>
-                            <constraint firstItem="Tv9-P9-qFv" firstAttribute="leading" secondItem="Pda-rV-4Oy" secondAttribute="leading" constant="20" id="cNS-ak-60e"/>
-                            <constraint firstItem="1lk-EW-VFk" firstAttribute="centerY" secondItem="Pda-rV-4Oy" secondAttribute="centerY" id="lPC-Ff-afi"/>
+                            <constraint firstItem="1lk-EW-VFk" firstAttribute="top" secondItem="Pda-rV-4Oy" secondAttribute="top" constant="40" id="895-Ta-RoG"/>
+                            <constraint firstItem="Tv9-P9-qFv" firstAttribute="leading" secondItem="Pda-rV-4Oy" secondAttribute="leading" constant="15" id="axs-e9-UKg"/>
+                            <constraint firstAttribute="bottom" secondItem="Tv9-P9-qFv" secondAttribute="bottom" constant="10" id="cSi-yc-9Cv"/>
+                            <constraint firstAttribute="trailing" secondItem="1lk-EW-VFk" secondAttribute="trailing" constant="40" id="sAF-Tr-iK7"/>
+                            <constraint firstAttribute="bottom" secondItem="1lk-EW-VFk" secondAttribute="bottom" constant="40" id="yaf-gw-cOm"/>
                         </constraints>
                     </stackView>
                 </subviews>
                 <color key="backgroundColor" red="1" green="0.3073266549" blue="0.34741706770000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 <constraints>
-                    <constraint firstItem="Pda-rV-4Oy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="4rW-1L-Xiq"/>
-                    <constraint firstItem="Pda-rV-4Oy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="TBa-yc-cK9"/>
-                    <constraint firstAttribute="trailing" secondItem="Pda-rV-4Oy" secondAttribute="trailing" constant="10" id="Ts3-ja-do8"/>
-                    <constraint firstAttribute="bottom" secondItem="Pda-rV-4Oy" secondAttribute="bottom" constant="15" id="Z0k-OG-fPU"/>
+                    <constraint firstItem="Pda-rV-4Oy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="R2D-m8-fCh"/>
+                    <constraint firstItem="Pda-rV-4Oy" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="XCk-Da-ZdV"/>
+                    <constraint firstItem="Pda-rV-4Oy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Yb8-oI-u7W"/>
+                    <constraint firstItem="Pda-rV-4Oy" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="hSn-AN-uv1"/>
+                    <constraint firstAttribute="bottom" secondItem="Pda-rV-4Oy" secondAttribute="bottom" id="i18-NY-zVE"/>
+                    <constraint firstAttribute="trailing" secondItem="Pda-rV-4Oy" secondAttribute="trailing" id="j7W-wA-wCT"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -72,7 +78,7 @@
                 <outlet property="friendView" destination="Tv9-P9-qFv" id="ens-2H-K1S"/>
                 <outlet property="userImage" destination="1lk-EW-VFk" id="u6b-0r-Qg6"/>
             </connections>
-            <point key="canvasLocation" x="260.86956521739131" y="-1.3392857142857142"/>
+            <point key="canvasLocation" x="-1388.4057971014495" y="-343.52678571428572"/>
         </tableViewCell>
     </objects>
     <resources>

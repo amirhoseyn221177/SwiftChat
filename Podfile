@@ -11,7 +11,7 @@ pod 'Alamofire'
 pod 'IQKeyboardManagerSwift'
 pod 'RealmSwift'
 pod 'SDWebImage'
-
+pod 'ObjectMapper'
 
 
 post_install do |installer|

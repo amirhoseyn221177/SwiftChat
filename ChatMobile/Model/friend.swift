@@ -8,11 +8,12 @@
 import Foundation
 import RealmSwift
 import SwiftyRSA
-
-class Friend : Object {
+import ObjectMapper
+class Friend : Object   {
+    @objc dynamic var id : String = ""
     @objc dynamic var name : String!
     @objc dynamic var username : String!
-    @objc dynamic var ProfilePhoto : String?
+    @objc dynamic var ProfilePhoto : String = ""
     @objc dynamic var publickey : Data?
     var mainUser = LinkingObjects(fromType : User.self , property:"friends")
     

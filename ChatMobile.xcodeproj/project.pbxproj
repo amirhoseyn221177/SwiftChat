@@ -27,6 +27,8 @@
 		EC3217882689CD24000BB632 /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3217872689CD24000BB632 /* KeyChain.swift */; };
 		EC32178A268A9BFF000BB632 /* DataRetrieving.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC321789268A9BFF000BB632 /* DataRetrieving.swift */; };
 		EC5357FF26997AA20029383B /* UserRest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5357FE26997AA20029383B /* UserRest.swift */; };
+		EC535801269AE2640029383B /* ChatUserRest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC535800269AE2640029383B /* ChatUserRest.swift */; };
+		EC535803269AE4330029383B /* FriendAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC535802269AE4330029383B /* FriendAPI.swift */; };
 		ECC124232691908200B17ABF /* PhotoProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC124222691908200B17ABF /* PhotoProcess.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +57,8 @@
 		EC3217872689CD24000BB632 /* KeyChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
 		EC321789268A9BFF000BB632 /* DataRetrieving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRetrieving.swift; sourceTree = "<group>"; };
 		EC5357FE26997AA20029383B /* UserRest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRest.swift; sourceTree = "<group>"; };
+		EC535800269AE2640029383B /* ChatUserRest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUserRest.swift; sourceTree = "<group>"; };
+		EC535802269AE4330029383B /* FriendAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendAPI.swift; sourceTree = "<group>"; };
 		ECC124222691908200B17ABF /* PhotoProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProcess.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -160,6 +164,8 @@
 		EC5357FD26997A730029383B /* RestController */ = {
 			isa = PBXGroup;
 			children = (
+				EC535800269AE2640029383B /* ChatUserRest.swift */,
+				EC535802269AE4330029383B /* FriendAPI.swift */,
 				EC5357FE26997AA20029383B /* UserRest.swift */,
 			);
 			path = RestController;
@@ -285,10 +291,12 @@
 				EC32178A268A9BFF000BB632 /* DataRetrieving.swift in Sources */,
 				EC32177926831615000BB632 /* MessageModel.swift in Sources */,
 				EC321755268315C8000BB632 /* AppDelegate.swift in Sources */,
+				EC535801269AE2640029383B /* ChatUserRest.swift in Sources */,
 				EC3217822683161F000BB632 /* ViewController.swift in Sources */,
 				EC5357FF26997AA20029383B /* UserRest.swift in Sources */,
 				EC32177D26831615000BB632 /* ChatUser.swift in Sources */,
 				EC321757268315C8000BB632 /* SceneDelegate.swift in Sources */,
+				EC535803269AE4330029383B /* FriendAPI.swift in Sources */,
 				EC32177826831615000BB632 /* Friend.swift in Sources */,
 				EC32177A26831615000BB632 /* RSAKeyPair.swift in Sources */,
 				EC32176E268315F4000BB632 /* FriendsCell.swift in Sources */,

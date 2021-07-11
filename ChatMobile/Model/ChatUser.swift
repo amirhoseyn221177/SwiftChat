@@ -8,9 +8,11 @@
 import Foundation
 import RealmSwift
 import SwiftyRSA
-class User : Object {
+class User : Object  {
+    @objc dynamic var id : String = ""
     @objc dynamic var name: String = ""
     @objc dynamic var username : String = ""
     @objc dynamic var  publicKey : Data?
+    @objc dynamic var password : String = ""
     let friends = List<Friend>()
 }

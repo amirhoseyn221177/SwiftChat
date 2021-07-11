@@ -22,12 +22,12 @@ class FriendsView: UIViewController ,UITableViewDelegate {
         friendsTable.dataSource = self
         friendsTable.separatorStyle = .singleLine
 //        createDummyUsers()
-        getAllTheFriends()
+//        getAllTheFriends()
 
     }
     
     
-    
+//
 //        func createDummyUsers(){
 //            let user = User()
 //            user.name = "Amir hoseyn"
@@ -39,6 +39,7 @@ class FriendsView: UIViewController ,UITableViewDelegate {
 //            friend1.username = "arshizz"
 //            friend1.ProfilePhoto = ""
 //            user.friends.append(friend1)
+//
 //
 //            let friend2 = Friend()
 //            friend2.name = "ali"
@@ -95,21 +96,23 @@ class FriendsView: UIViewController ,UITableViewDelegate {
 //            user.friends.append(friend10)
 //            let allfriends = [friend1,friend2,friend3,friend4,friend5,friend6,friend7,friend8,friend9,friend10]
 //            for i in 0...9 {
-//                dataRet.createUser(friend: allfriends[i])
+//                dataRet.createUser(friend: allfriends[i],user: user)
 //            }
 //
 //
 //    }
 
     
+//
+//    func getAllTheFriends (){
+//        let dataRet = DataRetrieving()
+//        let user = dataRet.getUser(username: "amir2211")
+//        allFriends = dataRet.getAllFriends(mainUser: user!.username)
+//        DispatchQueue.main.async {
+//            self.friendsTable.reloadData()
+//        }
+//    }
     
-    func getAllTheFriends (){
-        let dataRet = DataRetrieving()
-        allFriends = dataRet.getAllUser()
-        DispatchQueue.main.async {
-            self.friendsTable.reloadData()
-        }
-    }
     
     
 
@@ -128,7 +131,7 @@ extension FriendsView : UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "friendCell", for: indexPath) as! FriendsCell
         let friend = allFriends?[indexPath.row]
-        cell.friendCell.text = friend?.username
+        cell.friendCell.text = friend?.username ?? "ab nigger"
         return cell
     }
     
