@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ViewController: UIViewController{
 
@@ -14,22 +15,29 @@ class ViewController: UIViewController{
     @IBOutlet weak var passwordInput: UITextField!
     @IBOutlet weak var usernameTextinput: UITextField!
     let dateRet  = DataRetrieving()
+    var user : User?
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         loginUser()
     }
     @IBAction func settinUsername(_ sender: Any) {
-        let user  = User()
-        user.name = nameInput.text!
-        user.username = usernameTextinput.text!
-        user.password = passwordInput.text!
-        let userRest = UserRest(user: user)
-        userRest.createUser()
+        user  = User()
+        user?.name = nameInput.text!
+        user?.username = usernameTextinput.text!
+        user?.password = passwordInput.text!
+        print(user)
+        let userRest = UserRest(user: user!)
+        dateRet.createUser(user: user!)
     }
     
     func loginUser(){
-        let mainUser = dateRet.getUser()
-        if mainUser == nil{
+         user = dateRet.getUser()
+        print(user)
+        if user == nil{
             let alert = UIAlertController(title: "sheeet", message: "aint no user found  damn ", preferredStyle: .alert)
             self.present(alert, animated: true, completion: nil)
             DispatchQueue.main.asyncAfter(deadline: .now()+4) {
@@ -37,8 +45,21 @@ class ViewController: UIViewController{
 
             }
         }
-//        performSegue(withIdentifier: <#T##String#>, sender: <#T##Any?#>)
+        performSegue(withIdentifier: "friends", sender: self)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "friends"{
+            let friendView = segue.destination as! FriendsView
+            friendView.user = user
+            
+        }
     }
+    
+    
+    }
+
+
+
+
 

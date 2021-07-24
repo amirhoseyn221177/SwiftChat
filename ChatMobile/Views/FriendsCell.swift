@@ -21,7 +21,17 @@ class FriendsCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
         friendCell.sizeToFit()
+    
     }
+    
+    func updateTheImageView(imageData : Data?){
+        userImage.image = UIImage(data: imageData!)
+    }
+    
+    
+
+    
+    
     
     
 }

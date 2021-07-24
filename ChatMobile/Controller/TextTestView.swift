@@ -55,6 +55,7 @@ class TextTestView: UIViewController,UITableViewDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        rsa?.CreateRSAKeyPair()
         user.name = "amir"
         user.username = "amir2211"
         messagesTable.delegate = self
@@ -128,7 +129,7 @@ class TextTestView: UIViewController,UITableViewDelegate {
     @IBAction func SendMessageButtonPressed(_ sender: UIButton) {
         if let message = textMessage.text{
             let newMessage = MessageModel()
-            newMessage.ContentType = "text"
+            newMessage.contentType = "text"
             newMessage.sender = user.username
             newMessage.reciever = "sara"
             newMessage.textContent = message
@@ -207,11 +208,13 @@ extension TextTestView : WebSocketConnectionDelegate{
     }
     
     func onText(connection: WebSocketConnection, text: String) {
+        print(210)
         print(text)
     }
     
     func onBinary(connection: WebSocketConnection, binary: Data) {
-        print(binary.toHexString())
+        print(215)
+        decryptMessage(binary)
     }
     
     
@@ -332,8 +335,11 @@ extension TextTestView {
                 do{
                     let allDataKey : [ String : Array<UInt8>] = ["data" : encryptedAESData , "key":encryptedAESKey]
                     let json = try JSONSerialization.data(withJSONObject: allDataKey, options: .prettyPrinted)
-                    let jsonData = String (data: json, encoding: .utf8)?.data(using: .utf8)
-                    socket.sendBinary(jsonData!)
+                    let jsonData = String (data: json, encoding: .utf8)
+                    message.textContent = jsonData
+                    let messageRest = MessageRest(messageModel: message)
+                    let jsonEncoded = try JSONEncoder().encode(messageRest)
+                    socket.sendBinary(jsonEncoded)
                 }catch{
                     print(error.localizedDescription)
                 }
@@ -342,6 +348,19 @@ extension TextTestView {
            
             
         }
+    }
+    
+    func decryptMessage(_ message : Data){  
+        let jsonMessage = try! JSONSerialization.jsonObject(with: message, options: []) as? [String : Array<UInt8>]
+        let encryptedAESKey = jsonMessage!["key"]
+        let decryptedAESKey = rsa?.decryptAESKey(Data(encryptedAESKey!))
+        let encrypteddata = jsonMessage!["data"]
+        let decryptedData = aes.decryptData(encrypteddata, AesKey: decryptedAESKey!, iv: aes.Iv!)
+       
+        
+        
+            
+        
     }
     
 }

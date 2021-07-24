@@ -12,7 +12,7 @@ import RealmSwift
 class MessageModel : Object {
     @objc dynamic var textContent : String?
     @objc dynamic var mediaContent : String?
-    @objc dynamic var ContentType : String?
+    @objc dynamic var contentType : String?
     @objc dynamic var sender : String?
     @objc dynamic var reciever : String?
     @objc dynamic var dateTime : Int64 = 0

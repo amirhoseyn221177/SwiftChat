@@ -14,5 +14,7 @@ class User : Object  {
     @objc dynamic var username : String = ""
     @objc dynamic var  publicKey : Data?
     @objc dynamic var password : String = ""
+    @objc dynamic var profilePhotoURL : String = ""
+    @objc dynamic var profilePhotoData : Data?
     let friends = List<Friend>()
 }

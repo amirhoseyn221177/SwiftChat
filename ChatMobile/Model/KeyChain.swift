@@ -16,7 +16,7 @@ class Keychain{
     
     func saveToKeyChain(RSAPrivateKey:Array<UInt8>,RSAPublicKey : Array<UInt8>,AESKey : Array<UInt8>, username : String){
         let KeyObj :  [ String : Array<UInt8>] = [
-            "private " : RSAPrivateKey,
+            "private" : RSAPrivateKey,
             "public" : RSAPublicKey,
             "AES Key" : AESKey
         ]

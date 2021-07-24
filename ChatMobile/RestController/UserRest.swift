@@ -30,4 +30,24 @@ class UserRest {
             
         }
     }
+    
+    
+    func FetchImage(imageURL : String, completion : @escaping (Result<Data,Error>) -> Void ) {
+        DispatchQueue.global().async {
+            let task = URLSession.shared.dataTask(with: URL(string: imageURL)!) { data, URLResponse, error in
+             
+             guard let data = data , error == nil else {
+                 print(error?.localizedDescription as Any)
+                 completion(.failure(error!))
+                 return;
+             }
+        
+           
+             completion(.success(data))
+         }
+         task.resume()
+        }
+        
+    }
+    
 }

@@ -50,4 +50,16 @@ class DataRetrieving {
         return scope?.first
     }
     
+    func updateUser (user : User){
+        try! realm?.write({
+            realm?.add(user)
+        })
+    }
+    
+    func updateFriend(friend : Friend){
+        try! realm?.write({
+            realm?.add(friend)
+        })
+    }
+    
 }

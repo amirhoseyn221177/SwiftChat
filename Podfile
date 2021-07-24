@@ -9,8 +9,7 @@ pod 'CryptoSwift'
 pod 'SwiftyJSON'
 pod 'Alamofire'
 pod 'IQKeyboardManagerSwift'
-pod 'RealmSwift'
-pod 'SDWebImage'
+rfpod 'SDWebImage'
 pod 'ObjectMapper'
 
 
