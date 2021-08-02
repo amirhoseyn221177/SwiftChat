@@ -29,6 +29,7 @@ class FriendsView: UIViewController ,UITableViewDelegate {
         friendsTable.dataSource = self
         friendsTable.separatorStyle = .singleLine
 //        createDummyUsers()
+        navigationItem.backButtonTitle = "Back"
         getaAllFriends()
 
     }

@@ -60,7 +60,7 @@ class TextTestView: UIViewController,UITableViewDelegate {
         user.username = "amir2211"
         messagesTable.delegate = self
         messagesTable.dataSource = self
-        navigationItem.backButtonTitle = "Back"
+        navigationController?.navigationItem.backBarButtonItem?.title = "Back"
         textMessage.delegate = self
         ImageCollections.delegate = self
         ImageCollections.dataSource = self
@@ -187,19 +187,19 @@ extension TextTestView :UITableViewDataSource{
 extension TextTestView : WebSocketConnectionDelegate{
     func onDisconnected(connection: WebSocketConnection, reason: Data?, error: Error?) {
         print("fuck we got disconnected !!!!")
-        DispatchQueue.main.async {
-            self.navigationItem.title = "Disconnected"
-            self.navigationController?.navigationBar.barTintColor = UIColor.red
-        }
+//        DispatchQueue.main.async {
+//            self.navigationItem.title = "Disconnected"
+//            self.navigationController?.navigationBar.barTintColor = UIColor.red
+//        }
 
     }
     
     func onConnected(connection: WebSocketConnection) {
-        DispatchQueue.main.async {
-            self.navigationItem.title = "connected"
-            self.navigationController?.navigationBar.barTintColor = UIColor.blue
-
-        }
+//        DispatchQueue.main.async {
+//            self.navigationItem.title = "connected"
+//            self.navigationController?.navigationBar.barTintColor = UIColor.blue
+//
+//        }
         print("fuck yeah we are connected")
     }
         
@@ -213,7 +213,6 @@ extension TextTestView : WebSocketConnectionDelegate{
     }
     
     func onBinary(connection: WebSocketConnection, binary: Data) {
-        print(215)
         decryptMessage(binary)
     }
     
@@ -334,10 +333,12 @@ extension TextTestView {
             if let encryptedAESData = encryptedAESData  , let encryptedAESKey = encryptedAESKey{
                 do{
                     let allDataKey : [ String : Array<UInt8>] = ["data" : encryptedAESData , "key":encryptedAESKey]
+                    print(allDataKey)
                     let json = try JSONSerialization.data(withJSONObject: allDataKey, options: .prettyPrinted)
                     let jsonData = String (data: json, encoding: .utf8)
                     message.textContent = jsonData
                     let messageRest = MessageRest(messageModel: message)
+                    print("------------------------------------------------------------")
                     let jsonEncoded = try JSONEncoder().encode(messageRest)
                     socket.sendBinary(jsonEncoded)
                 }catch{
@@ -350,17 +351,24 @@ extension TextTestView {
         }
     }
     
-    func decryptMessage(_ message : Data){  
-        let jsonMessage = try! JSONSerialization.jsonObject(with: message, options: []) as? [String : Array<UInt8>]
-        let encryptedAESKey = jsonMessage!["key"]
-        let decryptedAESKey = rsa?.decryptAESKey(Data(encryptedAESKey!))
-        let encrypteddata = jsonMessage!["data"]
-        let decryptedData = aes.decryptData(encrypteddata, AesKey: decryptedAESKey!, iv: aes.Iv!)
-       
-        
-        
+    func decryptMessage(_ message : Data){
+        let jm = try! JSONDecoder().decode(MessageRest.self, from: message)
+        let textMessage = jm.textContent
+        let jsonTextmessage = Data(textMessage!.utf8)
+        do{
+            let jsonMessage = try JSONSerialization.jsonObject(with: jsonTextmessage, options: []) as? [String : Array<UInt8>]
+                    let encryptedAESKey = jsonMessage!["key"]
+                    let decryptedAESKey = rsa?.decryptAESKey(Data(encryptedAESKey!))
+                    let encrypteddata = jsonMessage!["data"]
+                    let decryptedData = aes.decryptData(encrypteddata, AesKey: decryptedAESKey!, iv: aes.Iv!)
+                    print(decryptedData)
             
+        }catch{
+            print(error.localizedDescription)
+        }
         
+
+
     }
     
 }
