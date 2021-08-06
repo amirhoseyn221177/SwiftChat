@@ -350,18 +350,35 @@ extension TextTestView {
         }
     }
     
-    func decryptMessage(_ message : Data){  
-        let jsonMessage = try! JSONSerialization.jsonObject(with: message, options: []) as? [String : Array<UInt8>]
-        let encryptedAESKey = jsonMessage!["key"]
-        let decryptedAESKey = rsa?.decryptAESKey(Data(encryptedAESKey!))
-        let encrypteddata = jsonMessage!["data"]
-        let decryptedData = aes.decryptData(encrypteddata, AesKey: decryptedAESKey!, iv: aes.Iv!)
-       
-        
-        
+    func decryptMessage(_ message : Data){
+        let jm = try! JSONDecoder().decode(MessageRest.self, from: message)
+        let textMessage = jm.textContent
+        print(jm)
+        let jsonTextmessage = Data(textMessage!.utf8)
+        do{
+            let jsonMessage = try JSONSerialization.jsonObject(with: jsonTextmessage, options: []) as? [String : Array<UInt8>]
+                    let encryptedAESKey = jsonMessage!["key"]
+                    let decryptedAESKey = rsa?.decryptAESKey(Data(encryptedAESKey!))
+                    let encrypteddata = jsonMessage!["data"]
+                    let decryptedData = aes.decryptData(encrypteddata, AesKey: decryptedAESKey!, iv: aes.Iv!)
+                    jm.textContent = decryptedData
+           let messageModel =  jm.convertRestToDB()
+            messageList.append(messageModel)
             
-        
+            DispatchQueue.main.async {
+                self.messagesTable.reloadData()
+            }
+            
+            
+
+        }catch{
+            print(error.localizedDescription)
+        }
+
+
+
     }
+    
     
 }
 

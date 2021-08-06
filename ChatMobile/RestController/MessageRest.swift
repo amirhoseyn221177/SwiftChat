@@ -30,4 +30,20 @@ class MessageRest : Codable {
         recieverPublicRSAKey = messageModel?.recieverPublicRSAKey
         iv = messageModel?.iv
     }
+    
+    
+    
+    func convertRestToDB()->MessageModel{
+        let messageModel = MessageModel()
+        messageModel.contentType = contentType
+        messageModel.dateTime = dateTime
+        messageModel.iv = iv
+        messageModel.mediaContent = mediaContent
+        messageModel.reciever = reciever
+        messageModel.recieverPublicRSAKey = recieverPublicRSAKey
+        messageModel.sender = sender
+        messageModel.textContent = textContent
+        print(messageModel.textContent)
+        return messageModel
+    }
 }

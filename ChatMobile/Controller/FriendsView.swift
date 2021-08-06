@@ -28,6 +28,8 @@ class FriendsView: UIViewController ,UITableViewDelegate {
         friendsTable.register(UINib(nibName: "FriendsCell", bundle: nil), forCellReuseIdentifier: "friendCell")
         friendsTable.dataSource = self
         friendsTable.separatorStyle = .singleLine
+        navigationItem.backButtonTitle = "Back"
+
 //        createDummyUsers()
         getaAllFriends()
 
