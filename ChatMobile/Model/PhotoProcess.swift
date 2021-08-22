@@ -9,14 +9,9 @@ import Foundation
 import Photos
 import UIKit
 class PhotoProcess  {
-    var LibraryPhotos : [UIImage] = [UIImage]()
-    
-    init(group : DispatchGroup) {
-        getPhotoFromLibrary(group)
-    }
-
-    
-    
+    var photos : [UIImage] = [UIImage]()
+    // This is for more custom selection and if the user wants to edit a photo
+//
     func getPhotoFromLibrary(_ group : DispatchGroup){
         let manager = PHImageManager.default()
         let reqOptions = PHImageRequestOptions()
@@ -24,7 +19,7 @@ class PhotoProcess  {
         reqOptions.isSynchronous = false
         reqOptions.deliveryMode = .fastFormat
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-        
+
         let results : PHFetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
         if results.count > 0 {
             print(32)
@@ -36,7 +31,7 @@ class PhotoProcess  {
                     manager.requestImage(for: asset, targetSize: size, contentMode: .aspectFit, options: reqOptions) { (image,_) in
                         if let image = image {
                             print(37)
-                            self.LibraryPhotos.append(image)
+                            self.photos.append(image)
                             group.leave()
                         }
                     }
@@ -46,4 +41,7 @@ class PhotoProcess  {
             print("No Image Found")
         }
     }
+    
+    
+ 
 }

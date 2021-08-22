@@ -7,8 +7,8 @@
 
 import UIKit
 import RealmSwift
-class TextTestView: UIViewController,UITableViewDelegate {
-//    let RsaKey = RSAKeyPair()
+class TextTestView: UIViewController,UITableViewDelegate, UINavigationControllerDelegate {
+    //    let RsaKey = RSAKeyPair()
     var friend : Friend? {
         didSet{
             navigationItem.title = friend?.username
@@ -22,11 +22,11 @@ class TextTestView: UIViewController,UITableViewDelegate {
     
     var keychainModel : Keychain?
     
-    var photoProcess : PhotoProcess!
-//    var messagesList : Results<MessageModel>! it is used when we immediatly save the data to the realm dataBase and it will show results live
+    var photoProcess : PhotoProcess = PhotoProcess()
+    //    var messagesList : Results<MessageModel>! it is used when we immediatly save the data to the realm dataBase and it will show results live
     
     var messageList : [MessageModel] = []
-    @IBOutlet weak var ImageCollections: UICollectionView!
+    var allImages : [UIImage] = [UIImage()]
     
     enum ImageSource {
         case Library
@@ -35,14 +35,15 @@ class TextTestView: UIViewController,UITableViewDelegate {
     
     let aes = AESKeyModel(iv: nil)
     var rsa :RSAKeyPair? = RSAKeyPair()
-
+    
+    @IBOutlet weak var PhotoUICollection: UICollectionView!
     
     var imagePicker : UIImagePickerController!
     @IBOutlet weak var textMessage: UITextField!
     let sender = "Amir sayyar"
     let realm = try! Realm()
     let message = MessageModel()
-
+    let photoCollection = PhotoCollectionUI()
     var messages: [MessageModel] = []
     var  socket : WebSocketConnection!
     @IBOutlet weak var messagesTable: UITableView!
@@ -61,27 +62,26 @@ class TextTestView: UIViewController,UITableViewDelegate {
         messagesTable.delegate = self
         messagesTable.dataSource = self
         navigationItem.backButtonTitle = "Back"
+        photoCollection.collectionView = PhotoUICollection
         textMessage.delegate = self
-        ImageCollections.delegate = self
-        ImageCollections.dataSource = self
-        ImageCollections.isHidden = true
         keychainModel = Keychain()
         hideKeyBoardWhenTapped()
         getAllKeysForEncryption()
-
-    
-
-        
-
         
         
         
-    
+        
+        
+        
+        
+        
+        
         socket = WebSocketNetwork()
         socket.delegate = self
         socket.connect()
-    
+        
     }
+    
     
     
     
@@ -93,38 +93,9 @@ class TextTestView: UIViewController,UITableViewDelegate {
     @objc func keyboardDisappeared(notification : NSNotification){
         print("keyboard Disappeared")
     }
-//
-//    func savingTextMessages(_ message : String){
-//        do {
-//            try realm.write{
-//                realm.add(newM)
-//            }
-//        }catch{
-//            print(error.localizedDescription)
-//        }
-//    }
-//
-//
-//
-//
 
-    @IBAction func choosingPhoto(_ sender: UIButton) {
-        let group = DispatchGroup()
-        photoProcess = PhotoProcess(group: group)
-        
-        
-        group.notify(queue: .global()){
-            print("done")
-        }
-        
-        
-
-        
-
-
-        
-        
-    }
+    
+    
     
     @IBAction func SendMessageButtonPressed(_ sender: UIButton) {
         if let message = textMessage.text{
@@ -135,12 +106,15 @@ class TextTestView: UIViewController,UITableViewDelegate {
             newMessage.textContent = message
             newMessage.dateTime = Int64(Date().timeIntervalSince1970)
             messageList.append(newMessage)
-            encryptingTheMessage(newMessage)
-            self.messagesTable.reloadData()
-            
+            print(newMessage)
+            let messageJustForTransformation = newMessage.copy() as! MessageModel
+            encryptingTheMessage(messageJustForTransformation)
+            DispatchQueue.main.async {
+                self.messagesTable.reloadData()
+            }
         }
     }
-
+    
     
     
     
@@ -149,12 +123,12 @@ class TextTestView: UIViewController,UITableViewDelegate {
         messagesTable.selectRow(at: indexPath, animated: true, scrollPosition: .top)
     }
     
-
     
     
     
-   
-
+    
+    
+    
 }
 
 
@@ -162,24 +136,18 @@ extension TextTestView :UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messageList.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "message", for : indexPath)
-        if let messagemodel = messageList[indexPath.row].textContent{
-            cell.textLabel?.text = messagemodel
+        print(messageList)
+        if let text = messageList[indexPath.row].textContent{
+            cell.textLabel?.text = text
         }else{
             print(175)
             cell.textLabel?.text = "salam"
-
         }
         return cell
-        
     }
-    
-    
-    
-    
-    
 }
 
 
@@ -191,18 +159,18 @@ extension TextTestView : WebSocketConnectionDelegate{
             self.navigationItem.title = "Disconnected"
             self.navigationController?.navigationBar.barTintColor = UIColor.red
         }
-
+        
     }
     
     func onConnected(connection: WebSocketConnection) {
         DispatchQueue.main.async {
             self.navigationItem.title = "connected"
             self.navigationController?.navigationBar.barTintColor = UIColor.blue
-
+            
         }
         print("fuck yeah we are connected")
     }
-        
+    
     func onError(connection: WebSocketConnection, error: Error) {
         print(error.localizedDescription)
     }
@@ -214,7 +182,7 @@ extension TextTestView : WebSocketConnectionDelegate{
     
     func onBinary(connection: WebSocketConnection, binary: Data) {
         print(215)
-        decryptMessage(binary)
+//        decryptMessage(binary)
     }
     
     
@@ -226,14 +194,14 @@ extension TextTestView :UITextFieldDelegate {
         textMessage.resignFirstResponder()
         return true
     }
-
+    
     func hideKeyBoardWhenTapped(){
         let tap = UITapGestureRecognizer(target: self, action: #selector(closeKeyBoard))
         tap.cancelsTouchesInView = false
         messagesTable.addGestureRecognizer(tap)
         
     }
-
+    
     @objc func closeKeyBoard(){
         view.endEditing(true)
     }
@@ -242,65 +210,52 @@ extension TextTestView :UITextFieldDelegate {
 }
 
 
+// MARK:  - AcessingPhotos and sending them
+
+
 extension TextTestView : UIImagePickerControllerDelegate{
-    
-    func selectImageFrom(_ source:ImageSource = .Library){
-        imagePicker = UIImagePickerController()
-        imagePicker.sourceType = .photoLibrary
-        present(imagePicker, animated: true, completion: nil)
-    }
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    @IBAction func goingToPhotos(_ sender: UIButton) {
+        photoCollection.getphoto { images in
+            do{
+                let allimages = try images.get()
+                if allimages.count > 0{
+                    self.photoCollection.collectionView.isHidden = false
+                    DispatchQueue.main.async {
+                        self.photoCollection.collectionView.reloadData()
+                    }
+                }
+                print(allimages)
+            }catch{
+                print(error.localizedDescription)
+            }
+        }
         
-
-    }
-
-    
-}
-
-
-extension TextTestView : UICollectionViewDelegate , UICollectionViewDataSource{
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath)
-        cell.backgroundColor = .red
-        cell.largeContentTitle = "abpolo"
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        
     }
     
 }
+
 
 // MARK:  - All Encryption Stuff
 extension TextTestView {
     
-//        print("bytes of data")
-//        print(message.textContent?.bytes)
-//        aes.message = message
-//        print("This is Binary AES")
-//        print(aes.getAESKey())
-//        var encryptedDataAES = aes.encryptData()
-//        var encrytedAES = rsa?.encryptAESKey()
-//        var decryptedAES = rsa?.decryptAESKey(encrytedAES!)
-//
-//        print(encryptedDataAES!)
-//        print("encrypted AES --------------------------------")
-//        print(encrytedAES!)
-//        print("decrypted AES binary")
-//        print(decryptedAES)
-//        var decryptedData = aes.decryptData(encryptedDataAES)
-//        print("decrypted data")
-//        print(decryptedData)
+    //        print("bytes of data")
+    //        print(message.textContent?.bytes)
+    //        aes.message = message
+    //        print("This is Binary AES")
+    //        print(aes.getAESKey())
+    //        var encryptedDataAES = aes.encryptData()
+    //        var encrytedAES = rsa?.encryptAESKey()
+    //        var decryptedAES = rsa?.decryptAESKey(encrytedAES!)
+    //
+    //        print(encryptedDataAES!)
+    //        print("encrypted AES --------------------------------")
+    //        print(encrytedAES!)
+    //        print("decrypted AES binary")
+    //        print(decryptedAES)
+    //        var decryptedData = aes.decryptData(encryptedDataAES)
+    //        print("decrypted data")
+    //        print(decryptedData)
     
     func getAllKeysForEncryption(){
         let dic : [String : Array<UInt8>]? = keychainModel?.getAllKeys(username: user.username)
@@ -315,7 +270,7 @@ extension TextTestView {
     func saveKeysToChain (){
         do{
             let aesKey = aes.createAESKey()
-        
+            
             let rsaPrivate = try rsa?.getPrivateKey()?.data().bytes
             let rsaPublic = try rsa?.getPublicKey()?.data().bytes
             if let rsaPrivate = rsaPrivate , let rsaPublic = rsaPublic , let aesKey = aesKey {
@@ -343,9 +298,9 @@ extension TextTestView {
                 }catch{
                     print(error.localizedDescription)
                 }
-
+                
             }
-           
+            
             
         }
     }
@@ -357,12 +312,12 @@ extension TextTestView {
         let jsonTextmessage = Data(textMessage!.utf8)
         do{
             let jsonMessage = try JSONSerialization.jsonObject(with: jsonTextmessage, options: []) as? [String : Array<UInt8>]
-                    let encryptedAESKey = jsonMessage!["key"]
-                    let decryptedAESKey = rsa?.decryptAESKey(Data(encryptedAESKey!))
-                    let encrypteddata = jsonMessage!["data"]
-                    let decryptedData = aes.decryptData(encrypteddata, AesKey: decryptedAESKey!, iv: aes.Iv!)
-                    jm.textContent = decryptedData
-           let messageModel =  jm.convertRestToDB()
+            let encryptedAESKey = jsonMessage!["key"]
+            let decryptedAESKey = rsa?.decryptAESKey(Data(encryptedAESKey!))
+            let encrypteddata = jsonMessage!["data"]
+            let decryptedData = aes.decryptData(encrypteddata, AesKey: decryptedAESKey!, iv: aes.Iv!)
+            jm.textContent = decryptedData
+            let messageModel =  jm.convertRestToDB()
             messageList.append(messageModel)
             
             DispatchQueue.main.async {
@@ -370,17 +325,19 @@ extension TextTestView {
             }
             
             
-
+            
         }catch{
             print(error.localizedDescription)
         }
-
-
-
+        
+        
+        
     }
     
     
 }
+
+
 
 
 

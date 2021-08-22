@@ -5,7 +5,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
-        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -136,7 +135,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <state key="normal" backgroundImage="paperclip" catalog="system"/>
                                         <connections>
-                                            <action selector="choosingPhoto:" destination="nBK-7J-4qM" eventType="touchUpInside" id="YhV-5E-6YK"/>
+                                            <action selector="goingToPhotos:" destination="nBK-7J-4qM" eventType="touchUpInside" id="2jQ-eT-fCT"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xTV-bY-ihO" userLabel="Send">
@@ -177,17 +176,7 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" semanticContentAttribute="forceLeftToRight" reuseIdentifier="imageCell" id="pyN-mE-5XB">
-                                        <rect key="frame" x="0.0" y="4.333333333333333" width="30" height="30.000000000000004"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="G2x-pQ-gsm">
-                                            <rect key="frame" x="0.0" y="0.0" width="30" height="30.000000000000004"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </collectionViewCellContentView>
-                                        <color key="backgroundColor" red="1" green="0.40546634999999998" blue="0.27852412850000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                    </collectionViewCell>
-                                </cells>
+                                <cells/>
                             </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="bKI-ub-Z2y"/>
@@ -204,7 +193,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="UserName" id="4I2-XM-EUQ"/>
                     <connections>
-                        <outlet property="ImageCollections" destination="9jJ-BK-TEh" id="O2S-xl-96N"/>
+                        <outlet property="PhotoUICollection" destination="9jJ-BK-TEh" id="0wV-jV-Ag0"/>
                         <outlet property="messagesTable" destination="qHY-qA-nmp" id="csT-G0-iHc"/>
                         <outlet property="textMessage" destination="L1i-7w-VcU" id="r3o-96-0EB"/>
                     </connections>
